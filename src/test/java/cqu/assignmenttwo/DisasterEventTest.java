@@ -1,7 +1,3 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/UnitTests/JUnit5TestClass.java to edit this template
- */
 package cqu.assignmenttwo;
 
 import org.junit.jupiter.api.AfterEach;
@@ -59,7 +55,6 @@ public class DisasterEventTest {
                 "Joe Arroyo",
                 655210754,
                 "123 Second Street",
-                1l,
                 disasterDate,
                 TypeOfDisaster.FIRE,
                 "400 Kent Street",

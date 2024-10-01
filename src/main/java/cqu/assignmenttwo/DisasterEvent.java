@@ -6,9 +6,8 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
 import jakarta.persistence.NamedQuery;
-import jakarta.persistence.Temporal;
-import jakarta.persistence.TemporalType;
 import java.util.StringJoiner;
+
 /**
  *
  * @author PJ
@@ -17,7 +16,7 @@ import java.util.StringJoiner;
 @NamedQuery(name = "getAllDisasterEvents", query = "SELECT d from DisasterEvent d")
 public class DisasterEvent implements Serializable {
 
-//    private static final long serialVersionUID = 1L;
+    private static final long serialVersionUID = 1L;
     @jakarta.persistence.Id
     @jakarta.persistence.GeneratedValue(strategy = jakarta.persistence.GenerationType.AUTO)
     private Long id;
@@ -36,10 +35,9 @@ public class DisasterEvent implements Serializable {
     }
 
     public DisasterEvent(String reporterName, int reporterMobile,
-            String reporterAddress, Long disasterId,
+            String reporterAddress,
             LocalDate disasterDate, TypeOfDisaster typeOfDisaster,
             String disasterLocation, String disasterDescription) {
-        this.disasterId = disasterId;
         this.disasterDate = disasterDate;
         this.reporterName = reporterName;
         this.reporterMobile = reporterMobile;
@@ -48,7 +46,7 @@ public class DisasterEvent implements Serializable {
         this.typeOfDisaster = typeOfDisaster;
         this.disasterDescription = disasterDescription;
     }
-    
+
     public Long getId() {
         return id;
     }
@@ -89,7 +87,7 @@ public class DisasterEvent implements Serializable {
      * @return The disaster id in String format.
      */
     public Long getDisasterId() {
-        return disasterId;
+        return id;
     }
 
     /**
@@ -229,7 +227,7 @@ public class DisasterEvent implements Serializable {
         joiner.add(getReporterName())
                 .add(Integer.toString(getReporterMobile()))
                 .add(getReporterAddress())
-                .add(getDisasterId().toString())
+                .add(getId().toString())
                 .add(getDisasterDate())
                 .add(getTypeOfDisasterAsString())
                 .add(getDisasterLocation())

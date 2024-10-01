@@ -6,6 +6,7 @@
     <class>cqu.assignmenttwo.Staff</class>
     <class>cqu.assignmenttwo.NotificationAlert</class>
     <class>cqu.assignmenttwo.ActionPlans</class>
+    <class>cqu.assignmenttwo.ActionsDone</class>
     <properties>
       <property name="jakarta.persistence.jdbc.url" value="jdbc:mysql://localhost:3306/w6p1db?zeroDateTimeBehavior=CONVERT_TO_NULL"/>
       <property name="jakarta.persistence.jdbc.user" value="root"/>

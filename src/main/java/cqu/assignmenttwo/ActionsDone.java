@@ -2,10 +2,11 @@ package cqu.assignmenttwo;
 
 import java.io.Serializable;
 import java.util.StringJoiner;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import jakarta.persistence.Entity;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
+import jakarta.persistence.NamedQuery;
+
 
 /**
  *
@@ -15,8 +16,8 @@ import javax.persistence.Id;
 public class ActionsDone implements Serializable {
 
     private static final long serialVersionUID = 1L;
-    @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @jakarta.persistence.Id
+    @jakarta.persistence.GeneratedValue(strategy = jakarta.persistence.GenerationType.AUTO)
     private Long id;
     //Attributes
     private Long disasterId;
@@ -25,6 +26,9 @@ public class ActionsDone implements Serializable {
     private String actionsDoneReview;
     private String additionalActions;
 
+    public ActionsDone() {
+    }
+    
     //Constructor
     public ActionsDone(Long disasterId, ResponderAuthority authorityRequired,
             String actionsDone, String actionsDoneReview,

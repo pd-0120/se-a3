@@ -152,8 +152,8 @@ public class DisasterAssistantController {
     private ObservableList<String> getDisasterIds() {
         ObservableList<String> disasterIds = FXCollections.observableArrayList();
         for (DisasterEvent disasterEvent : disasterEvents) {
-            if (!disasterIds.contains(disasterEvent.getDisasterId().toString())) {
-                disasterIds.add(disasterEvent.getDisasterId().toString());
+            if (!disasterIds.contains(disasterEvent.getId().toString())) {
+                disasterIds.add(disasterEvent.getId().toString());
             }
         }
         return disasterIds;
@@ -171,7 +171,7 @@ public class DisasterAssistantController {
             // Filter the disasterEvents to find the selected one
             ObservableList<DisasterEvent> filteredReports
                     = disasterEvents.filtered(disasterEvent
-                            -> disasterEvent.getDisasterId().toString().equals(selectedId));
+                            -> disasterEvent.getId().toString().equals(selectedId));
             // Set the items in the table view
             disasterInformationTableView.setItems(filteredReports);
 
@@ -292,7 +292,7 @@ public class DisasterAssistantController {
         if (selectedEvent != null && selectedPriorityLevel != null
                 && selectedAuthorityRequired != null && providedActions != null) {
             // Capture the data from the selected event
-            Long disasterId = selectedEvent.getDisasterId();
+            Long disasterId = selectedEvent.getId();
 
             // Create a new Action Plan
             ActionPlans actionPlan = new ActionPlans(

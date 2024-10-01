@@ -173,7 +173,6 @@ public class DisasterRegistrationController {
                         reporterNameController.getText(),
                         Integer.parseInt(reporterMobileController.getText()),
                         reporterAddressController.getText(),
-                        Long.parseLong(disasterIdController.getText()),
                         disasterDateController.getValue(),
                         typeOfDisasterCombobox.getValue(),
                         disasterLocationController.getText(),

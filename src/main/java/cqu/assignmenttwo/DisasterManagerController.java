@@ -199,6 +199,7 @@ public class DisasterManagerController {
                 disasterIds.add(actionPlan.getDisasterId().toString());
             }
         }
+        System.out.println(disasterIds);
         return disasterIds;
     }
 

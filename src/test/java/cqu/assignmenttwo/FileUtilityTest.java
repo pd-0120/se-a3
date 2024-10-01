@@ -120,7 +120,7 @@ public class FileUtilityTest {
     public void testSaveAndLoadDisasterEventsToCsv() {
         List<DisasterEvent> disasterList = new ArrayList<>();
         disasterList.add(new DisasterEvent(
-                "Mary Jane", 1111111111, "415 Victoria Street", 1l,
+                "Mary Jane", 1111111111, "415 Victoria Street",
                 LocalDate.of(2024, 8, 21), TypeOfDisaster.FLOOD, "Central",
                 "Heavy flooding"
         ));
