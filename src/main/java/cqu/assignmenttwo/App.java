@@ -9,7 +9,7 @@ import java.io.IOException;
 
 /**
  *
- * @author AndresPinilla 12243141
+ * @author AndresPinilla 1224314111111
  *
  * This is the main class of the application, it is used to load the fxml files.
  * Extends the JavaFX Application class.
