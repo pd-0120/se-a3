@@ -5,8 +5,6 @@
 package cqu.assignmenttwo;
 
 import jakarta.persistence.EntityManager;
-import jakarta.persistence.EntityManagerFactory;
-import jakarta.persistence.Persistence;
 import java.io.IOException;
 import java.time.LocalDate;
 import java.util.LinkedList;

@@ -1,5 +1,7 @@
 package cqu.assignmenttwo;
 
+import jakarta.persistence.EntityManager;
+import jakarta.persistence.Query;
 import java.io.IOException;
 import java.util.LinkedList;
 import java.util.List;
@@ -105,7 +107,15 @@ public class DisasterManagerController {
         // Sets the font style of planSelectionCombobox
         planSelectionCombobox.setStyle("-fx-font-family: 'Arial'");
         // Load data from CSV file in the observableList
-        actionPlans.setAll(FileUtility.loadPlanFromCsv("ActionPlan.csv"));
+        EntityManagerUtils emu = new EntityManagerUtils();
+        EntityManager em = emu.getEm();
+        Query query = em.createNamedQuery("getAllActionPlans");
+        List<ActionPlans> actionPlanList = query.getResultList();
+        
+        // Convert the list to an ObservableList
+        ObservableList<ActionPlans> actionPlans = FXCollections.observableArrayList(actionPlanList);
+        
+        actionPlans.setAll(actionPlans);
         // Populate ComboBox with disaster IDs
         planSelectionCombobox.getItems().addAll(getDisasterIdsForActionPlan());
         // Set up event handler for ComboBox
@@ -186,7 +196,7 @@ public class DisasterManagerController {
         ObservableList<String> disasterIds = FXCollections.observableArrayList();
         for (ActionPlans actionPlan : actionPlans) {
             if (!disasterIds.contains(actionPlan.getDisasterId())) {
-                disasterIds.add(actionPlan.getDisasterId());
+                disasterIds.add(actionPlan.getDisasterId().toString());
             }
         }
         return disasterIds;
@@ -260,7 +270,7 @@ public class DisasterManagerController {
         if (selectedActionPlan != null && selectedReviewPlanDecision != null) {
 
             // Capture the data from the selected action plan.
-            String disasterId = selectedActionPlan.getDisasterId();
+            Long disasterId = selectedActionPlan.getDisasterId();
             String levelOfPriority = selectedActionPlan.getLevelOfPriority();
             ResponderAuthority authorityRequired = 
                     ResponderAuthority.valueOf(selectedActionPlan.getAuthorityRequired());
@@ -309,7 +319,7 @@ public class DisasterManagerController {
         ObservableList<String> disasterIds = FXCollections.observableArrayList();
         for (ActionsDone actionDone : actionsDone) {
             if (!disasterIds.contains(actionDone.getDisasterId())) {
-                disasterIds.add(actionDone.getDisasterId());
+                disasterIds.add(actionDone.getDisasterId().toString());
             }
         }
         return disasterIds;
@@ -374,7 +384,7 @@ public class DisasterManagerController {
         if (selectedActionDone != null && selectedReviewActionDecision != null) {
 
             // Capture the data from the selected action done.
-            String disasterId = selectedActionDone.getDisasterId();
+            Long disasterId = selectedActionDone.getDisasterId();
             ResponderAuthority authorityRequired = 
                     ResponderAuthority.valueOf(selectedActionDone.getAuthorityRequired());
             String actionsDone = selectedActionDone.getActionsDone();

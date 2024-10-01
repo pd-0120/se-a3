@@ -285,7 +285,7 @@ public class DisasterAssistantController {
         if (selectedEvent != null && selectedPriorityLevel != null && 
                 selectedAuthorityRequired != null && providedActions != null) {
             // Capture the data from the selected event
-            String disasterId = selectedEvent.getDisasterId();
+            Long disasterId = Long.parseLong(selectedEvent.getDisasterId());
 
             // Create a new Action Plan
             ActionPlans actionPlan = new ActionPlans(

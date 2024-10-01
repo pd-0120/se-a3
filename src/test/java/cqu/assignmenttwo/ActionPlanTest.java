@@ -49,7 +49,7 @@ public class ActionPlanTest {
     @BeforeEach
     public void setUp() {
         plan = new ActionPlans(
-        "DISASTER001",
+        1L,
         "High",
         ResponderAuthority.FIREFIGHTERS,
         "Control the fire and assist the people in danger.",
@@ -64,7 +64,7 @@ public class ActionPlanTest {
     @BeforeEach
     public void SetUpFailTest(){
         secondPlan = new ActionPlans(
-        "DISASTER002",
+        1L,
         "High",
         ResponderAuthority.POLICE,
         "Capture the terrorist.",

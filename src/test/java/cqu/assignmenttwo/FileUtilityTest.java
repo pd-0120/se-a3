@@ -195,7 +195,7 @@ public class FileUtilityTest {
     public void testSaveAndLoadActionPlanToCsv() {
         List<ActionPlans> actionPlanList = new ArrayList<>();
         actionPlanList.add(new ActionPlans(
-                "DISASTER006", "High", ResponderAuthority.MEDICAL_TEAM, 
+                1L, "High", ResponderAuthority.MEDICAL_TEAM, 
                 "The people involved in the car accident is bleeding and need immediate assistance",
                 "Approve", "No changes required"
         ));
@@ -232,7 +232,7 @@ public class FileUtilityTest {
     public void testSaveAndLoadActionsDoneToCsv() {
         List<ActionsDone> actionsDoneList = new ArrayList<>();
         actionsDoneList.add(new ActionsDone(
-                "DISASTER007", ResponderAuthority.MEDICAL_TEAM, 
+               1L, ResponderAuthority.MEDICAL_TEAM, 
                 "The people was assisted and taken to the hospital","Approve", 
                 "No additional actions required"
         ));

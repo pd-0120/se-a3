@@ -47,7 +47,7 @@ public class ActionsDoneTest {
     @BeforeEach
     public void setUp() {
         actions = new ActionsDone(
-                "DISASTER001",
+                1L,
                 ResponderAuthority.FIREFIGHTERS,
                 "The fire was controlled and the people was assisted.",
                 "Approve",

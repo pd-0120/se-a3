@@ -1,41 +1,56 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package cqu.assignmenttwo;
 
+import java.io.Serializable;
+import jakarta.persistence.Entity;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
+import jakarta.persistence.NamedQuery;
 import java.util.StringJoiner;
 
 /**
  *
- * @author AndresPinilla 12243141
- *
- * This class is to create the Action Plan objects. It has getters and setters
- * to access the different types of data. It has a string joiner method to
- * format the data to save it in the csv file. It has a method to set the header
- * of the data saved in the csv file.
+ * @author PJ
  */
-public class ActionPlans {
+@Entity
+@NamedQuery(name = "getAllActionPlans", query = "SELECT a from ActionPlans a")
+public class ActionPlans implements Serializable {
+
+    private static final long serialVersionUID = 1L;
+    @jakarta.persistence.Id
+    @jakarta.persistence.GeneratedValue(strategy = jakarta.persistence.GenerationType.AUTO)
+    private Long id;
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
 
     //Attributes
-    private String disasterId;
+    private Long disasterId;
     private String levelOfPriority;
+    @Enumerated(EnumType.STRING)
     private ResponderAuthority authorityRequired;
     private String actionsRequired;
     private String planReview;
     private String planChanges;
 
     //Constructor
-    public ActionPlans(String disasterId, String levelOfPriority,
-                      ResponderAuthority authorityRequired,
-                      String actionsRequired, String planReview,
-                      String planChanges) {
+    public ActionPlans(Long disasterId, String levelOfPriority,
+            ResponderAuthority authorityRequired,
+            String actionsRequired, String planReview,
+            String planChanges) {
         this.disasterId = disasterId;
         this.levelOfPriority = levelOfPriority;
         this.authorityRequired = authorityRequired;
         this.actionsRequired = actionsRequired;
         this.planReview = planReview;
         this.planChanges = planChanges;
+    }
+
+    public ActionPlans() {
     }
 
     //Getters and Setters
@@ -61,7 +76,7 @@ public class ActionPlans {
      *
      * @return The disaster id in String format.
      */
-    public String getDisasterId() {
+    public Long getDisasterId() {
         return disasterId;
     }
 
@@ -69,7 +84,7 @@ public class ActionPlans {
      * Sets the disaster id associated with the action plan.
      *
      */
-    public void setDisasterId(String disasterId) {
+    public void setDisasterId(Long disasterId) {
         this.disasterId = disasterId;
     }
 
@@ -148,7 +163,7 @@ public class ActionPlans {
      */
     public String toCsvStringActionPlan() {
         StringJoiner joiner = new StringJoiner(",");
-        joiner.add(getDisasterId())
+        joiner.add(getDisasterId().toString())
                 .add(getLevelOfPriority())
                 .add(getAuthorityRequired())
                 .add(getActionsRequired())
@@ -167,4 +182,5 @@ public class ActionPlans {
         return "DisasterId,LevelOfPriority,AuthorityRequired,ActionsRequired,"
                 + "ManagerReview,ChangesRequired";
     }
+
 }

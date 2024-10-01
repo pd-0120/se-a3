@@ -276,12 +276,12 @@ public class FileUtility {
             // Create a map for easy lookup of existing plans by disasterId
             Map<String, ActionPlans> planMap = new HashMap<>();
             for (ActionPlans plan : existingPlans) {
-                planMap.put(plan.getDisasterId(), plan);
+                planMap.put(plan.getDisasterId().toString(), plan);
             }
 
             // Update existing plans or add new ones
             for (ActionPlans plan : plans) {
-                planMap.put(plan.getDisasterId(), plan);
+                planMap.put(plan.getDisasterId().toString(), plan);
             }
 
             // Save all updated plans back to the CSV file
@@ -332,7 +332,7 @@ public class FileUtility {
                 String[] values = line.split(",");
                 if (values.length >= 6) { // Ensure there are enough columns
                     planCSV.add(new ActionPlans(
-                            values[0], // DisasterId
+                            1L, // DisasterId
                             values[1], // LevelOfPriority
                             ResponderAuthority.valueOf(values[2]), // authorityRequired
                             values[3], // ActionsRequired
@@ -363,12 +363,12 @@ public class FileUtility {
         // Create a map for easy lookup of existing plans by disasterId
         Map<String, ActionsDone> actionMap = new HashMap<>();
         for (ActionsDone action : existingActions) {
-            actionMap.put(action.getDisasterId(), action);
+            actionMap.put(action.getDisasterId().toString(), action);
         }
 
         // Update existing plans or add new ones
         for (ActionsDone action : actions) {
-            actionMap.put(action.getDisasterId(), action);
+            actionMap.put(action.getDisasterId().toString(), action);
         }
 
         // Save all updated plans back to the CSV file
@@ -420,7 +420,7 @@ public class FileUtility {
                 String[] values = line.split(",");
                 if (values.length >= 5) { // Ensure there are enough columns
                     actionCSV.add(new ActionsDone(
-                            values[0], // DisasterId
+                            1L, // DisasterId
                             // authorityRequired
                             ResponderAuthority.valueOf(values[1]),
                             values[2], // actionsDone

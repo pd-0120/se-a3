@@ -110,7 +110,7 @@ public class EmergencyResponderController {
         ObservableList<String> disasterIds = FXCollections.observableArrayList();
         for (ActionPlans actionPlan : actionPlans) {
             if (!disasterIds.contains(actionPlan.getDisasterId())) {
-                disasterIds.add(actionPlan.getDisasterId());
+                disasterIds.add(actionPlan.getDisasterId().toString());
             }
         }
         return disasterIds;
@@ -162,7 +162,7 @@ public class EmergencyResponderController {
         if (selectedActionPlan != null && providedActionsDone != null) {
             
             // Capture the data from the selected action plan.
-            String disasterId = selectedActionPlan.getDisasterId();
+            Long disasterId = selectedActionPlan.getDisasterId();
             ResponderAuthority authorityRequired = 
                     ResponderAuthority.valueOf(selectedActionPlan.getAuthorityRequired());
             String actionsDone = providedActionsDone;
