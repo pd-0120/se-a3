@@ -188,10 +188,13 @@ public class LoginAndRegistrationController {
             EntityManagerUtils emu = new EntityManagerUtils();
             EntityManager em = emu.getEm();
 
-            Query query = em.createQuery("select s from staff s where email=" + emailAddress + " and password=" + password);
+            Query query = em.createNamedQuery("findByEmailIdAndPassword");
+            query.setParameter("emailAddress", emailAddress);
+            query.setParameter("password", password);
             query.setMaxResults(1);
-            Staff staff = (Staff) query.getSingleResult();
-
+            List<Staff> staff =  query.getResultList();
+            return !staff.isEmpty();
+            
         } catch (Exception e) {
             e.printStackTrace();
             // Handle IO exception, return false (credentials don't exist)
@@ -300,7 +303,7 @@ public class LoginAndRegistrationController {
 
                 EntityManagerUtils emu = new EntityManagerUtils();
                 EntityManager em = emu.getEm();
-                
+
                 em.getTransaction().begin();
                 em.persist(staff);
                 em.getTransaction().commit();

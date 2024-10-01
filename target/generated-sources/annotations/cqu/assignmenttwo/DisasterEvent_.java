@@ -6,7 +6,7 @@ import jakarta.persistence.metamodel.StaticMetamodel;
 import java.time.LocalDate;
 import javax.annotation.processing.Generated;
 
-@Generated(value="org.eclipse.persistence.internal.jpa.modelgen.CanonicalModelProcessor", date="2024-10-01T12:00:05", comments="EclipseLink-4.0.3.v20240522-rb5bf922d44efed420f3a09bc7fa4b015c369ea2a")
+@Generated(value="org.eclipse.persistence.internal.jpa.modelgen.CanonicalModelProcessor", date="2024-10-01T13:49:44", comments="EclipseLink-4.0.3.v20240522-rb5bf922d44efed420f3a09bc7fa4b015c369ea2a")
 @StaticMetamodel(DisasterEvent.class)
 @SuppressWarnings({"rawtypes", "deprecation"})
 public class DisasterEvent_ { 

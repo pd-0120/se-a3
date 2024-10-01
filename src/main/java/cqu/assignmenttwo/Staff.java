@@ -18,6 +18,8 @@ import java.util.StringJoiner;
 
 @NamedQuery(name = "findByEmailId", 
             query = "SELECT s FROM Staff s WHERE s.emailAddress = :emailAddress") 
+@NamedQuery(name = "findByEmailIdAndPassword", 
+            query = "SELECT s FROM Staff s WHERE s.emailAddress = :emailAddress and s.password = :password") 
 public class Staff implements Serializable {
 
     private static final long serialVersionUID = 1L;
