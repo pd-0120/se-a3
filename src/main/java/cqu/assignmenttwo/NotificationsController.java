@@ -81,7 +81,7 @@ public class NotificationsController {
         priorityTable.setCellValueFactory(
                 new PropertyValueFactory<>("levelOfPriority"));
 
-        // Load the notification data from the CSV file
+        // Load the notification data from the DB
         EntityManagerUtils emu = new EntityManagerUtils();
         EntityManager em = emu.getEm();
         Query query = em.createNamedQuery("getAllNotifications");
