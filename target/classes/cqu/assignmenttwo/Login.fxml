@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.PasswordField?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.paint.Color?>
+<?import javafx.scene.paint.RadialGradient?>
+<?import javafx.scene.paint.Stop?>
+<?import javafx.scene.shape.Line?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="765.0" prefWidth="1000.0" style="-fx-background-color: MediumSeaGreen;" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="cqu.assignmenttwo.LoginAndRegistrationController">
+   <children>
+      <Label layoutX="250.0" layoutY="276.0" text="Please enter your details to log in:">
+         <font>
+            <Font name="Arial" size="19.0" />
+         </font>
+      </Label>
+      <Label layoutX="250.0" layoutY="390.0" text="Email">
+         <font>
+            <Font name="Arial" size="16.0" />
+         </font>
+      </Label>
+      <Label layoutX="250.0" layoutY="452.0" text="Password:">
+         <font>
+            <Font name="Arial" size="16.0" />
+         </font>
+      </Label>
+      <PasswordField fx:id="staffPassword" layoutX="400.0" layoutY="452.0" onKeyTyped="#staffPassword">
+         <font>
+            <Font name="Arial" size="13.0" />
+         </font></PasswordField>
+      <Label layoutX="295.0" layoutY="625.0" text="Not register yet?">
+         <font>
+            <Font name="Arial Bold" size="16.0" />
+         </font>
+      </Label>
+      <Button layoutX="437.0" layoutY="621.0" mnemonicParsing="false" onAction="#signUpStaffButton" style="-fx-background-color: #FFFFFF;" text="Sign up" textFill="#3775fc" underline="true">
+         <font>
+            <Font name="Arial Bold" size="15.0" />
+         </font>
+      </Button>
+      <Button layoutX="400.0" layoutY="512.0" mnemonicParsing="false" onAction="#loginButton" prefHeight="0.0" prefWidth="160.0" style="-fx-background-color: #FFFFFF;" text="Login" textFill="#0d0d0d">
+         <font>
+            <Font name="Arial Bold" size="16.0" />
+         </font>
+      </Button>
+      <TextField fx:id="staffEmail" layoutX="400.0" layoutY="390.0" onKeyTyped="#staffEmail">
+         <font>
+            <Font name="Arial" size="13.0" />
+         </font>
+      </TextField>
+      <Label fx:id="staffNotRegisteredLabel" layoutX="250.0" layoutY="555.0" text="Staff not registered" textFill="#d30000" visible="false">
+         <font>
+            <Font name="Arial" size="16.0" />
+         </font>
+      </Label>
+      <Label layoutX="300.0" layoutY="80.0" text="Disaster Response System (DRS)" textAlignment="CENTER" wrapText="true">
+         <font>
+            <Font name="Arial Bold" size="25.0" />
+         </font>
+      </Label>
+      <Label layoutX="250.0" layoutY="205.0" text="Login">
+         <font>
+            <Font name="Arial Bold" size="22.0" />
+         </font>
+      </Label>
+      <Line endX="225.0" layoutX="351.0" layoutY="247.0" startX="-100.0" strokeLineCap="ROUND">
+         <fill>
+            <RadialGradient centerX="0.5" centerY="0.5" radius="0.5">
+               <stops>
+                  <Stop>
+                     <color>
+                        <Color />
+                     </color>
+                  </Stop>
+                  <Stop offset="1.0">
+                     <color>
+                        <Color red="1.0" green="1.0" blue="1.0" />
+                     </color>
+                  </Stop>
+               </stops>
+            </RadialGradient>
+         </fill>
+      </Line>
+      <Label layoutX="250.0" layoutY="328.0" text="Select role">
+         <font>
+            <Font name="Arial" size="16.0" />
+         </font>
+      </Label>
+      <ComboBox fx:id="roleComboboxLogin" layoutX="400.0" layoutY="328.0" prefHeight="26.0" prefWidth="163.0" />
+      <Button layoutX="426.0" layoutY="687.0" mnemonicParsing="false" onAction="#backButton" style="-fx-background-color: DodgerBlue;" text="Main Menu" textFill="#fcfcfc">
+         <font>
+            <Font name="Arial" size="16.0" />
+         </font>
+      </Button>
+   </children>
+</AnchorPane>

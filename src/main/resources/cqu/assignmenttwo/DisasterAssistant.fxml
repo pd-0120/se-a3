@@ -1,0 +1,172 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TextArea?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.paint.Color?>
+<?import javafx.scene.paint.RadialGradient?>
+<?import javafx.scene.paint.Stop?>
+<?import javafx.scene.shape.Line?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="765.0" prefWidth="1000.0" style="-fx-background-color: MediumSeaGreen;" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="cqu.assignmenttwo.DisasterAssistantController">
+   <children>
+      <Label layoutX="102.0" layoutY="62.0" text="Disaster Event Assistant">
+         <font>
+            <Font name="Arial Bold" size="22.0" />
+         </font>
+      </Label>
+      <Label layoutX="102.0" layoutY="398.0" text="Alert Notification">
+         <font>
+            <Font name="Arial" size="16.0" />
+         </font>
+      </Label>
+      <Button layoutX="307.0" layoutY="398.0" mnemonicParsing="false" onAction="#alertButton" prefHeight="26.0" prefWidth="170.0" style="-fx-background-color: #FFFFFF;" text="Create and Send Alert" textFill="#0d0d0d">
+         <font>
+            <Font name="Arial Bold" size="14.0" />
+         </font>
+      </Button>
+      <Label layoutX="102.0" layoutY="166.0" text="Select a disaster event">
+         <font>
+            <Font name="Arial" size="16.0" />
+         </font>
+      </Label>
+      <Label layoutX="102.0" layoutY="353.0" text="Select Level of Priority">
+         <font>
+            <Font name="Arial" size="16.0" />
+         </font>
+      </Label>
+      <Label layoutX="102.0" layoutY="216.0" text="Disaster event information">
+         <font>
+            <Font name="Arial" size="16.0" />
+         </font>
+      </Label>
+      <ComboBox fx:id="disasterSelectionCombobox" layoutX="307.0" layoutY="166.0" onAction="#handleDisasterSelection" prefHeight="26.0" prefWidth="162.0" />
+      <Label layoutX="266.0" layoutY="14.0" text="Disaster Response System (DRS)" textAlignment="CENTER" wrapText="true">
+         <font>
+            <Font name="Arial Bold" size="25.0" />
+         </font>
+      </Label>
+      <Line endX="225.0" layoutX="203.0" layoutY="143.0" startX="-100.0" strokeLineCap="ROUND">
+         <fill>
+            <RadialGradient centerX="0.5" centerY="0.5" radius="0.5">
+               <stops>
+                  <Stop>
+                     <color>
+                        <Color />
+                     </color>
+                  </Stop>
+                  <Stop offset="1.0">
+                     <color>
+                        <Color red="1.0" green="1.0" blue="1.0" />
+                     </color>
+                  </Stop>
+               </stops>
+            </RadialGradient>
+         </fill>
+      </Line>
+      <Label layoutX="102.0" layoutY="115.0" text="Disaster Event Information">
+         <font>
+            <Font name="Arial Bold" size="18.0" />
+         </font>
+      </Label>
+      <Line endX="225.0" layoutX="203.0" layoutY="330.0" startX="-100.0" strokeLineCap="ROUND">
+         <fill>
+            <RadialGradient centerX="0.5" centerY="0.5" radius="0.5">
+               <stops>
+                  <Stop>
+                     <color>
+                        <Color />
+                     </color>
+                  </Stop>
+                  <Stop offset="1.0">
+                     <color>
+                        <Color red="1.0" green="1.0" blue="1.0" />
+                     </color>
+                  </Stop>
+               </stops>
+            </RadialGradient>
+         </fill>
+      </Line>
+      <Label layoutX="102.0" layoutY="302.0" text="Disaster Event Prioritization">
+         <font>
+            <Font name="Arial Bold" size="18.0" />
+         </font>
+      </Label>
+      <Line endX="225.0" layoutX="201.0" layoutY="494.0" startX="-100.0" strokeLineCap="ROUND">
+         <fill>
+            <RadialGradient centerX="0.5" centerY="0.5" radius="0.5">
+               <stops>
+                  <Stop>
+                     <color>
+                        <Color />
+                     </color>
+                  </Stop>
+                  <Stop offset="1.0">
+                     <color>
+                        <Color red="1.0" green="1.0" blue="1.0" />
+                     </color>
+                  </Stop>
+               </stops>
+            </RadialGradient>
+         </fill>
+      </Line>
+      <Label layoutX="100.0" layoutY="466.0" text="Action Plan Generation">
+         <font>
+            <Font name="Arial Bold" size="18.0" />
+         </font>
+      </Label>
+      <Label layoutX="102.0" layoutY="517.0" text="Authority Required">
+         <font>
+            <Font name="Arial" size="16.0" />
+         </font>
+      </Label>
+      <ComboBox fx:id="authorityRequiredCombobox" layoutX="307.0" layoutY="517.0" onAction="#handlerAuthoritySelection" prefHeight="26.0" prefWidth="162.0" />
+      <Label layoutX="102.0" layoutY="568.0" text="Actions Required">
+         <font>
+            <Font name="Arial" size="16.0" />
+         </font>
+      </Label>
+      <TextArea fx:id="actionRequiredTextArea" layoutX="307.0" layoutY="557.0" onKeyTyped="#actionRequiredTextArea" prefHeight="68.0" prefWidth="230.0" />
+      <Button layoutX="307.0" layoutY="651.0" mnemonicParsing="false" onAction="#createActionPlanButton" prefHeight="26.0" prefWidth="170.0" style="-fx-background-color: #FFFFFF;" text="Create Action Plan" textFill="#0d0d0d">
+         <font>
+            <Font name="Arial Bold" size="14.0" />
+         </font>
+      </Button>
+      <ComboBox fx:id="priorityLevelCombobox" layoutX="307.0" layoutY="353.0" onAction="#handlerPrioritySelection" prefHeight="26.0" prefWidth="162.0" />
+      <TableView fx:id="disasterInformationTableView" layoutX="307.0" layoutY="213.0" prefHeight="68.0" prefWidth="613.0">
+        <columns>
+          <TableColumn fx:id="reporterNameTable" prefWidth="97.0" text="Reporter Name" />
+          <TableColumn fx:id="disasterIdTable" prefWidth="97.0" text="Disaster Id" />
+            <TableColumn fx:id="disasterDateTable" prefWidth="97.0" text="Disaster Date" />
+            <TableColumn fx:id="typeOfDisasterTable" prefWidth="97.0" text="Type Of Disaster" />
+            <TableColumn fx:id="disasterLocationTable" prefWidth="105.0" text="Disaster Location" />
+            <TableColumn fx:id="disasterDescriptionTable" prefWidth="120.0" text="Disaster Description" />
+        </columns>
+      </TableView>
+      <Label fx:id="notificationErrorLabel" layoutX="492.0" layoutY="403.0" text="Notification error" textFill="FIREBRICK" visible="false">
+         <font>
+            <Font name="Arial Bold" size="14.0" />
+         </font>
+      </Label>
+      <Label fx:id="notificationCreatedLabel" layoutX="492.0" layoutY="403.0" text="Notification created" textFill="NAVY" visible="false">
+         <font>
+            <Font name="Arial Bold" size="14.0" />
+         </font>
+      </Label>
+      <Label fx:id="planErrorLabel" layoutX="549.0" layoutY="560.0" text="Action Plan error" textFill="FIREBRICK" visible="false">
+         <font>
+            <Font name="Arial Bold" size="14.0" />
+         </font>
+      </Label>
+      <Button layoutX="307.0" layoutY="707.0" mnemonicParsing="false" onAction="#assistantBackButtonController" style="-fx-background-color: DodgerBlue;" text="Log Out" textFill="#fcfcfc">
+         <font>
+            <Font name="Arial" size="16.0" />
+         </font>
+      </Button>
+   </children>
+</AnchorPane>

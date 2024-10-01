@@ -1,0 +1,2 @@
+DisasterId,DisasterDate,TypeOfDisaster,DisasterLocation,DisasterDescription,LevelOfPriority
+DISASTER001,2024-08-23,FIRE,50 Second Street,The building is on fire,High

@@ -1,0 +1,2 @@
+DisasterId,LevelOfPriority,AuthorityRequired,ActionsRequired,ManagerReview,ChangesRequired
+DISASTER001,High,FIREFIGHTERS,Stop the fire,Approve,null

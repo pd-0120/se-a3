@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.paint.Color?>
+<?import javafx.scene.paint.RadialGradient?>
+<?import javafx.scene.paint.Stop?>
+<?import javafx.scene.shape.Line?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="765.0" prefWidth="1000.0" style="-fx-background-color: MediumSeaGreen;" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="cqu.assignmenttwo.LoginAndRegistrationController">
+   <children>
+      <Label layoutX="102.0" layoutY="186.0" text="Disaster Manager Menu">
+         <font>
+            <Font name="Arial Bold" size="22.0" />
+         </font>
+      </Label>
+      <Button layoutX="102.0" layoutY="409.0" mnemonicParsing="false" onAction="#reviewNewReportButton" prefHeight="30.0" prefWidth="240.0" style="-fx-background-color: #FFFFFF;" text="Review a new report" textFill="#0d0d0d">
+         <font>
+            <Font name="Arial Bold" size="14.0" />
+         </font>
+      </Button>
+      <Label layoutX="102.0" layoutY="334.0" text="Please select one of the following options">
+         <font>
+            <Font name="Arial" size="16.0" />
+         </font>
+      </Label>
+      <Label layoutX="275.0" layoutY="83.0" text="Disaster Response System (DRS)" textAlignment="CENTER" wrapText="true">
+         <font>
+            <Font name="Arial Bold" size="25.0" />
+         </font>
+      </Label>
+      <Line endX="225.0" layoutX="203.0" layoutY="223.0" startX="-100.0" strokeLineCap="ROUND">
+         <fill>
+            <RadialGradient centerX="0.5" centerY="0.5" radius="0.5">
+               <stops>
+                  <Stop>
+                     <color>
+                        <Color />
+                     </color>
+                  </Stop>
+                  <Stop offset="1.0">
+                     <color>
+                        <Color red="1.0" green="1.0" blue="1.0" />
+                     </color>
+                  </Stop>
+               </stops>
+            </RadialGradient>
+         </fill>
+      </Line>
+      <Label fx:id="notificationCreatedLabel" layoutX="102.0" layoutY="265.0" text="The review has been completed!" textFill="NAVY">
+         <font>
+            <Font name="Arial Bold" size="16.0" />
+         </font>
+      </Label>
+      <Button layoutX="406.0" layoutY="410.0" mnemonicParsing="false" onAction="#mainMenuActionManagerButton" style="-fx-background-color: DodgerBlue;" text="Log out" textFill="#fcfcfc">
+         <font>
+            <Font name="Arial" size="16.0" />
+         </font>
+      </Button>
+   </children>
+</AnchorPane>

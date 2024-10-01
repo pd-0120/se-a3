@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.paint.Color?>
+<?import javafx.scene.paint.RadialGradient?>
+<?import javafx.scene.paint.Stop?>
+<?import javafx.scene.shape.Line?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="765.0" prefWidth="1000.0" style="-fx-background-color: MediumSeaGreen;" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="cqu.assignmenttwo.NotificationsController">
+   <children>
+      <Label layoutX="277.0" layoutY="60.0" text="Disaster Response System (DRS)" textAlignment="CENTER" wrapText="true">
+         <font>
+            <Font name="Arial Bold" size="25.0" />
+         </font>
+      </Label>
+      <Line endX="225.0" layoutX="203.0" layoutY="188.0" startX="-100.0" strokeLineCap="ROUND">
+         <fill>
+            <RadialGradient centerX="0.5" centerY="0.5" radius="0.5">
+               <stops>
+                  <Stop>
+                     <color>
+                        <Color />
+                     </color>
+                  </Stop>
+                  <Stop offset="1.0">
+                     <color>
+                        <Color red="1.0" green="1.0" blue="1.0" />
+                     </color>
+                  </Stop>
+               </stops>
+            </RadialGradient>
+         </fill>
+      </Line>
+      <Label layoutX="102.0" layoutY="150.0" text="Notification Alert">
+         <font>
+            <Font name="Arial Bold" size="22.0" />
+         </font>
+      </Label>
+      <TableView fx:id="notificationTableView" layoutX="102.0" layoutY="258.0" prefHeight="270.0" prefWidth="783.0">
+        <columns>
+          <TableColumn fx:id="disasterIdTable" prefWidth="130.0" text="Disaster Id" />
+          <TableColumn fx:id="dateTable" prefWidth="130.0" text="Disaster Date" />
+            <TableColumn fx:id="typeTable" prefWidth="130.0" text="Type of Disaster" />
+            <TableColumn fx:id="locationTable" prefWidth="130.0" text="Disaster Location" />
+            <TableColumn fx:id="descriptionTable" prefWidth="130.0" text="Disaster Description" />
+            <TableColumn fx:id="priorityTable" prefWidth="130.0" text="Level of Priority" />
+        </columns>
+      </TableView>
+      <Label layoutX="102.0" layoutY="214.0" text="The following report contains the information of the notification alert registered">
+         <font>
+            <Font name="Arial" size="16.0" />
+         </font>
+      </Label>
+      <Button layoutX="443.0" layoutY="576.0" mnemonicParsing="false" onAction="#mainMenuController" style="-fx-background-color: DodgerBlue;" text="Main Menu" textFill="#fcfcfc">
+         <font>
+            <Font name="Arial" size="16.0" />
+         </font>
+      </Button>
+   </children>
+</AnchorPane>

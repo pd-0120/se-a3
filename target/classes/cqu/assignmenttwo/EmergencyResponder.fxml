@@ -1,0 +1,117 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TextArea?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.paint.Color?>
+<?import javafx.scene.paint.RadialGradient?>
+<?import javafx.scene.paint.Stop?>
+<?import javafx.scene.shape.Line?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="765.0" prefWidth="1000.0" style="-fx-background-color: MediumSeaGreen;" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="cqu.assignmenttwo.EmergencyResponderController">
+   <children>
+      <Label layoutX="266.0" layoutY="45.0" text="Disaster Response System (DRS)" textAlignment="CENTER" wrapText="true">
+         <font>
+            <Font name="Arial Bold" size="25.0" />
+         </font>
+      </Label>
+      <Label layoutX="102.0" layoutY="116.0" text="Emergency Responder">
+         <font>
+            <Font name="Arial Bold" size="22.0" />
+         </font>
+      </Label>
+      <Label layoutX="102.0" layoutY="243.0" text="Select the action plan">
+         <font>
+            <Font name="Arial" size="16.0" />
+         </font>
+      </Label>
+      <Label layoutX="102.0" layoutY="302.0" text="Action plan information">
+         <font>
+            <Font name="Arial" size="16.0" />
+         </font>
+      </Label>
+      <ComboBox fx:id="planSelectionCombobox" layoutX="300.0" layoutY="243.0" onAction="#handlePlanSelection" prefHeight="26.0" prefWidth="162.0" />
+      <Line endX="225.0" layoutX="203.0" layoutY="207.0" startX="-100.0" strokeLineCap="ROUND">
+         <fill>
+            <RadialGradient centerX="0.5" centerY="0.5" radius="0.5">
+               <stops>
+                  <Stop>
+                     <color>
+                        <Color />
+                     </color>
+                  </Stop>
+                  <Stop offset="1.0">
+                     <color>
+                        <Color red="1.0" green="1.0" blue="1.0" />
+                     </color>
+                  </Stop>
+               </stops>
+            </RadialGradient>
+         </fill>
+      </Line>
+      <Label layoutX="102.0" layoutY="179.0" text="Action Plan Information">
+         <font>
+            <Font name="Arial Bold" size="18.0" />
+         </font>
+      </Label>
+      <Line endX="225.0" layoutX="201.0" layoutY="443.0" startX="-100.0" strokeLineCap="ROUND">
+         <fill>
+            <RadialGradient centerX="0.5" centerY="0.5" radius="0.5">
+               <stops>
+                  <Stop>
+                     <color>
+                        <Color />
+                     </color>
+                  </Stop>
+                  <Stop offset="1.0">
+                     <color>
+                        <Color red="1.0" green="1.0" blue="1.0" />
+                     </color>
+                  </Stop>
+               </stops>
+            </RadialGradient>
+         </fill>
+      </Line>
+      <Label layoutX="100.0" layoutY="415.0" text="Actions Done Report Generation">
+         <font>
+            <Font name="Arial Bold" size="18.0" />
+         </font>
+      </Label>
+      <TableView fx:id="actionPlanTableView" layoutX="300.0" layoutY="299.0" prefHeight="68.0" prefWidth="621.0">
+        <columns>
+          <TableColumn fx:id="disasterIdTable" prefWidth="89.0" text="Disaster Id" />
+          <TableColumn fx:id="priorityTable" prefWidth="97.0" text="Level Of Priority" />
+            <TableColumn fx:id="authorityTable" prefWidth="110.0" text="Authority Required" />
+            <TableColumn fx:id="actionsRequiredTable" prefWidth="97.0" text="Actions Required" />
+            <TableColumn fx:id="planReviewTable" prefWidth="105.0" text="Manager Review" />
+            <TableColumn fx:id="planChangesTable" prefWidth="122.0" text="Changes Required" />
+        </columns>
+      </TableView>
+      <Label fx:id="planErrorLabel" layoutX="540.0" layoutY="565.0" text="Plan error" textFill="FIREBRICK" visible="false">
+         <font>
+            <Font name="Arial Bold" size="14.0" />
+         </font>
+      </Label>
+      <Label layoutX="102.0" layoutY="476.0" text="Describe the actions done">
+         <font>
+            <Font name="Arial" size="16.0" />
+         </font>
+      </Label>
+      <TextArea fx:id="actionsDoneTextArea" layoutX="300.0" layoutY="476.0" onKeyTyped="#actionsDoneTextArea" prefHeight="48.0" prefWidth="280.0" />
+      <Button layoutX="300.0" layoutY="558.0" mnemonicParsing="false" onAction="#completeActionDoneButton" prefHeight="26.0" prefWidth="218.0" style="-fx-background-color: #FFFFFF;" text="Create Action Done Report" textFill="#0d0d0d">
+         <font>
+            <Font name="Arial Bold" size="14.0" />
+         </font>
+      </Button>
+      <Button layoutX="300.0" layoutY="630.0" mnemonicParsing="false" onAction="#responderBackButtonController" style="-fx-background-color: DodgerBlue;" text="Log Out" textFill="#fcfcfc">
+         <font>
+            <Font name="Arial" size="16.0" />
+         </font>
+      </Button>
+   </children>
+</AnchorPane>
