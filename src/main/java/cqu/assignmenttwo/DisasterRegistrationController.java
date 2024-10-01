@@ -66,7 +66,7 @@ public class DisasterRegistrationController {
     private TextField disasterIdController;
 
     /**
-     * This section is to initialize the combobox, the disaster date and to
+     * This section is to initialize the combo box, the disaster date and to
      * generate the disaster Id.
      */
     @FXML
@@ -173,7 +173,7 @@ public class DisasterRegistrationController {
                         reporterNameController.getText(),
                         Integer.parseInt(reporterMobileController.getText()),
                         reporterAddressController.getText(),
-                        disasterIdController.getText(),
+                        Long.parseLong(disasterIdController.getText()),
                         disasterDateController.getValue(),
                         typeOfDisasterCombobox.getValue(),
                         disasterLocationController.getText(),

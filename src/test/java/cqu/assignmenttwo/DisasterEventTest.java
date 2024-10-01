@@ -59,7 +59,7 @@ public class DisasterEventTest {
                 "Joe Arroyo",
                 655210754,
                 "123 Second Street",
-                "DISASTER123",
+                1l,
                 disasterDate,
                 TypeOfDisaster.FIRE,
                 "400 Kent Street",

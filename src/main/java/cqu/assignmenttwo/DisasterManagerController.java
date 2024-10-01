@@ -21,10 +21,10 @@ import javafx.scene.input.KeyEvent;
 /**
  *
  * @author AndresPinilla 12243141
- * 
- * This class is to control the DisasterManager.fxml. It has multiple data
- * types to store the user's input and key events and key actions methods to
- * handle the user interaction.
+ *
+ * This class is to control the DisasterManager.fxml. It has multiple data types
+ * to store the user's input and key events and key actions methods to handle
+ * the user interaction.
  */
 public class DisasterManagerController {
 
@@ -32,21 +32,21 @@ public class DisasterManagerController {
     // Stores all the action plan.
     private List<ActionPlans> planList = new LinkedList<>();
     // Stores the action plan selected.
-    private ObservableList<ActionPlans> actionPlans = 
-            FXCollections.observableArrayList();
+    private ObservableList<ActionPlans> actionPlans
+            = FXCollections.observableArrayList();
     // Stores the selected action plan from the disasterSelectionCombobox.
     private ActionPlans selectedActionPlan;
     // Stores the selected Review Plan Decision from the planReviewCombobox.
     private String selectedReviewPlanDecision;
     // Stores the provided Changes Required from the actionRequiredTextArea.
     private String providedChangesRequired;
-    
+
     // Variables related to the selection of the action done.
     // Stores all the action done.
     private List<ActionsDone> actionsList = new LinkedList<>();
     // Stores the actions done selected.
-    private ObservableList<ActionsDone> actionsDone = 
-            FXCollections.observableArrayList();
+    private ObservableList<ActionsDone> actionsDone
+            = FXCollections.observableArrayList();
     // Stores the selected disaster event from the disasterSelectionCombobox.
     private ActionsDone selectedActionDone;
     // Stores the selected Review Plan Decision from the planReviewCombobox.
@@ -99,7 +99,7 @@ public class DisasterManagerController {
     private TextArea planChangesTextArea;
 
     /**
-     * This section is to initialize the Tableviews, Tablecolumns and to set 
+     * This section is to initialize the Table views, Table columns and to set
      * arial font so it can be compatible with mac OS system.
      */
     @FXML
@@ -111,10 +111,10 @@ public class DisasterManagerController {
         EntityManager em = emu.getEm();
         Query query = em.createNamedQuery("getAllActionPlans");
         List<ActionPlans> actionPlanList = query.getResultList();
-        
+
         // Convert the list to an ObservableList
         ObservableList<ActionPlans> actionPlans = FXCollections.observableArrayList(actionPlanList);
-        
+
         actionPlans.setAll(actionPlans);
         // Populate ComboBox with disaster IDs
         planSelectionCombobox.getItems().addAll(getDisasterIdsForActionPlan());
@@ -144,8 +144,8 @@ public class DisasterManagerController {
         if (planReviewCombobox != null) {
             // Initialize the planReviewCombobox with values Approve or 
             // Request Changes.
-            ObservableList planReviewDecision = 
-                    FXCollections.observableArrayList("Approve", "Request Changes");
+            ObservableList planReviewDecision
+                    = FXCollections.observableArrayList("Approve", "Request Changes");
             planReviewCombobox.setItems(planReviewDecision);
             // Sets the font style
             planReviewCombobox.setStyle("-fx-font-family: 'Arial'");
@@ -179,8 +179,8 @@ public class DisasterManagerController {
         // it with two String options.
         if (actionDoneReviewCombobox != null) {
             // Initialize the planReviewCombobox with values Approve or Request Changes.
-            ObservableList actionReviewDecision = 
-                    FXCollections.observableArrayList("Approve", "Request Additional Actions");
+            ObservableList actionReviewDecision
+                    = FXCollections.observableArrayList("Approve", "Request Additional Actions");
             actionDoneReviewCombobox.setItems(actionReviewDecision);
             // Sets the font style
             actionDoneReviewCombobox.setStyle("-fx-font-family: 'Arial'");
@@ -195,7 +195,7 @@ public class DisasterManagerController {
     private ObservableList<String> getDisasterIdsForActionPlan() {
         ObservableList<String> disasterIds = FXCollections.observableArrayList();
         for (ActionPlans actionPlan : actionPlans) {
-            if (!disasterIds.contains(actionPlan.getDisasterId())) {
+            if (!disasterIds.contains(actionPlan.getDisasterId().toString())) {
                 disasterIds.add(actionPlan.getDisasterId().toString());
             }
         }
@@ -214,7 +214,7 @@ public class DisasterManagerController {
         if (selectedId != null) {
             // Filter the action plan to find the selected one.
             ObservableList<ActionPlans> filteredReports = actionPlans.filtered(
-                    actionPlan -> actionPlan.getDisasterId().equals(selectedId));
+                    actionPlan -> actionPlan.getDisasterId().toString().equals(selectedId));
             // Set the items in the table view
             actionPlanTableView.setItems(filteredReports);
 
@@ -272,8 +272,8 @@ public class DisasterManagerController {
             // Capture the data from the selected action plan.
             Long disasterId = selectedActionPlan.getDisasterId();
             String levelOfPriority = selectedActionPlan.getLevelOfPriority();
-            ResponderAuthority authorityRequired = 
-                    ResponderAuthority.valueOf(selectedActionPlan.getAuthorityRequired());
+            ResponderAuthority authorityRequired
+                    = ResponderAuthority.valueOf(selectedActionPlan.getAuthorityRequired());
             String actionsRequired = selectedActionPlan.getActionsRequired();
 
             // Create a new Action Plan
@@ -286,10 +286,12 @@ public class DisasterManagerController {
                     providedChangesRequired
             );
             // Save the plan in the action plan list.
-            planList.add(actionPlan);
-
-            // Save the plan list to a CSV file.
-            FileUtility.saveActionPlanToCsv(planList, "ActionPlan.csv");
+            // Load the notification data from the CSV file
+            EntityManagerUtils emu = new EntityManagerUtils();
+            EntityManager em = emu.getEm();
+            em.getTransaction().begin();
+            em.persist(actionPlan);
+            em.getTransaction().commit();
 
             // Hides the error message when the action plan is created.
             planErrorLabel.setVisible(false);
@@ -318,7 +320,7 @@ public class DisasterManagerController {
     private ObservableList<String> getDisasterIdsForActionsDone() {
         ObservableList<String> disasterIds = FXCollections.observableArrayList();
         for (ActionsDone actionDone : actionsDone) {
-            if (!disasterIds.contains(actionDone.getDisasterId())) {
+            if (!disasterIds.contains(actionDone.getDisasterId().toString())) {
                 disasterIds.add(actionDone.getDisasterId().toString());
             }
         }
@@ -326,8 +328,9 @@ public class DisasterManagerController {
     }
 
     /**
-     * This section is to handle the selection in the actionDoneSelectionCombobox.
-     * 
+     * This section is to handle the selection in the
+     * actionDoneSelectionCombobox.
+     *
      * @param event the selection done by the user.
      */
     @FXML
@@ -336,7 +339,7 @@ public class DisasterManagerController {
         if (selectedId != null) {
             // Filter the Actions done to find the selected one.
             ObservableList<ActionsDone> filteredReports = actionsDone.filtered(
-                    actionDone -> actionDone.getDisasterId().equals(selectedId));
+                    actionDone -> actionDone.getDisasterId().toString().equals(selectedId));
             // Set the items in the table view.
             actionDoneTableView.setItems(filteredReports);
 
@@ -349,7 +352,7 @@ public class DisasterManagerController {
 
     /**
      * This section is to handle the selection in the actionDoneReviewCombobox.
-     * 
+     *
      * @param event the selection done by the user.
      */
     @FXML
@@ -385,8 +388,8 @@ public class DisasterManagerController {
 
             // Capture the data from the selected action done.
             Long disasterId = selectedActionDone.getDisasterId();
-            ResponderAuthority authorityRequired = 
-                    ResponderAuthority.valueOf(selectedActionDone.getAuthorityRequired());
+            ResponderAuthority authorityRequired
+                    = ResponderAuthority.valueOf(selectedActionDone.getAuthorityRequired());
             String actionsDone = selectedActionDone.getActionsDone();
 
             // Create a new Action Done.
@@ -397,11 +400,11 @@ public class DisasterManagerController {
                     selectedReviewActionDecision,
                     providedAdditionalActions
             );
-            // Save the action in the action done list
-            actionsList.add(actionsDoneToReport);
-
-            // Save the action list to a CSV file
-            FileUtility.saveActionsDoneToCsv(actionsList, "ActionsDone.csv");
+            EntityManagerUtils emu = new EntityManagerUtils();
+            EntityManager em = emu.getEm();
+            em.getTransaction().begin();
+            em.persist(actionsDoneToReport);
+            em.getTransaction().commit();
 
             // Hides the error message when the action done is created.
             actionDoneErrorLabel.setVisible(false);
