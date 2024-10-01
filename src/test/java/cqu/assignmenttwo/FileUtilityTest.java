@@ -161,7 +161,7 @@ public class FileUtilityTest {
     public void testSaveAndLoadNotificationAlertsToCsv() {
         List<NotificationAlert> notificationList = new ArrayList<>();
         notificationList.add(new NotificationAlert(
-                "DISASTER005", "22-08-2024", "EARTHQUAKE", "Penrith",
+                1L, "22-08-2024", "EARTHQUAKE", "Penrith",
                 "A couple of houses are damaged and people is hurt", "High"
         ));
 

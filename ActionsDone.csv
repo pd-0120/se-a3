@@ -1,2 +1,2 @@
 DisasterId,AuthorityRequired,ActionsDone,ManagerReview,AdditionalActionsRequired
-DISASTER001,FIREFIGHTERS,Test,0,0
+DISASTER001,FIREFIGHTERS,Test,Approve,null

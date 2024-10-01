@@ -1,25 +1,23 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package cqu.assignmenttwo;
 
-import java.time.LocalDate;
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.NamedQuery;
+import java.io.Serializable;
 import java.util.StringJoiner;
 
 /**
  *
- * @author AndresPinilla
- *
- * This class is to create the Notification Alert objects. It has getters and setters
- * to access the different types of data. It has a string joiner method to
- * format the data to save it in the csv file. It has a method to set the header
- * of the data saved in the csv file.
+ * @author PJ
  */
-public class NotificationAlert {
-    
+@Entity
+@NamedQuery(name = "getAllNotifications", query = "SELECT n from NotificationAlert n")
+public class NotificationAlert implements Serializable {
+
     //Attributes
-    private String disasterId;
+    private Long disasterId;
     private String disasterDate;
     private String typeOfDisaster;
     private String disasterLocation;
@@ -27,9 +25,9 @@ public class NotificationAlert {
     private String levelOfPriority;
 
     //Constructor
-    public NotificationAlert(String disasterId, String disasterDate, 
-                             String typeOfDisaster, String disasterLocation, 
-                             String disasterDescription, String levelOfPriority) {
+    public NotificationAlert(Long disasterId, String disasterDate,
+            String typeOfDisaster, String disasterLocation,
+            String disasterDescription, String levelOfPriority) {
         this.disasterId = disasterId;
         this.disasterDate = disasterDate;
         this.typeOfDisaster = typeOfDisaster;
@@ -38,13 +36,49 @@ public class NotificationAlert {
         this.levelOfPriority = levelOfPriority;
     }
 
+    public NotificationAlert() {
+    }
+    
+    private static final long serialVersionUID = 1L;
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    private Long id;
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    @Override
+    public int hashCode() {
+        int hash = 0;
+        hash += (id != null ? id.hashCode() : 0);
+        return hash;
+    }
+
+    @Override
+    public boolean equals(Object object) {
+        // TODO: Warning - this method won't work in the case the id fields are not set
+        if (!(object instanceof NotificationAlert)) {
+            return false;
+        }
+        NotificationAlert other = (NotificationAlert) object;
+        if ((this.id == null && other.id != null) || (this.id != null && !this.id.equals(other.id))) {
+            return false;
+        }
+        return true;
+    }
+
     // Getters and Setters
     /**
      * Gets the disaster id associated with the notification alert.
      *
      * @return The disaster id in String format.
      */
-    public String getDisasterId() {
+    public Long getDisasterId() {
         return disasterId;
     }
 
@@ -52,7 +86,7 @@ public class NotificationAlert {
      * Sets the disaster id associated with the notification alert.
      *
      */
-    public void setDisasterId(String disasterId) {
+    public void setDisasterId(Long disasterId) {
         this.disasterId = disasterId;
     }
 
@@ -99,7 +133,7 @@ public class NotificationAlert {
         return disasterLocation;
     }
 
-     /**
+    /**
      * Sets the disaster location associated with the notification alert.
      *
      */
@@ -140,7 +174,7 @@ public class NotificationAlert {
     public void setLevelOfPriority(String levelOfPriority) {
         this.levelOfPriority = levelOfPriority;
     }
-    
+
     /**
      * Converts the notification alert details to a CSV formatted string.
      *
@@ -148,15 +182,15 @@ public class NotificationAlert {
      */
     public String toCsvStringNotificationAlert() {
         StringJoiner joiner = new StringJoiner(",");
-        joiner.add(getDisasterId())
-                .add(getDisasterDate())
-                .add(getTypeOfDisaster())
-                .add(getDisasterLocation())
-                .add(getDisasterDescription())
-                .add(getLevelOfPriority());
+        // joiner.add(getDisasterId())
+        //         .add(getDisasterDate())
+        //         .add(getTypeOfDisaster())
+        //         .add(getDisasterLocation())
+        //         .add(getDisasterDescription())
+        //         .add(getLevelOfPriority());
         return joiner.toString();
     }
-    
+
     /**
      * Gets the CSV header for the notification alert information.
      *
@@ -167,4 +201,5 @@ public class NotificationAlert {
         return "DisasterId,DisasterDate,TypeOfDisaster,DisasterLocation,"
                 + "DisasterDescription,LevelOfPriority";
     }
+
 }

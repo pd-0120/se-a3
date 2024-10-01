@@ -11,9 +11,7 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.nio.file.Files;
 import java.nio.file.Path;
-import java.time.LocalDate;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -190,12 +188,12 @@ public class FileUtility {
             // by disasterId.
             Map<String, NotificationAlert> notificationMap = new HashMap<>();
             for (NotificationAlert notification : existingNotifications) {
-                notificationMap.put(notification.getDisasterId(), notification);
+//                notificationMap.put(notification.getId(), notification);
             }
 
             // Update existing notifications or add new ones.
             for (NotificationAlert notification : notifications) {
-                notificationMap.put(notification.getDisasterId(), notification);
+//                notificationMap.put(notification.getDisasterId(), notification);
             }
 
             // Save all updated notifications back to the CSV file.
@@ -248,7 +246,7 @@ public class FileUtility {
                 String[] values = line.split(",");
                 if (values.length >= 6) { // Ensure there are enough columns
                     notificationCSV.add(new NotificationAlert(
-                            values[0], // DisasterId
+                            1L, // DisasterId
                             values[1], // DisasterDate
                             values[2], // TypeOfDisaster
                             values[3], // DisasterLocation

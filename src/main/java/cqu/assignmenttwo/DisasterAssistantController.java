@@ -223,7 +223,7 @@ public class DisasterAssistantController {
         // Validates if there is an event and a priority level selected.
         if (selectedEvent != null && selectedPriorityLevel != null) {
             // Capture the data from the selected event
-            String disasterId = selectedEvent.getDisasterId();
+            Long disasterId = selectedEvent.getId();
             String disasterDate = selectedEvent.getDisasterDate();
             String typeOfDisaster = selectedEvent.getTypeOfDisasterAsString();
             String disasterLocation = selectedEvent.getDisasterLocation();

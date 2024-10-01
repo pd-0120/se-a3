@@ -4,9 +4,10 @@
  */
 package cqu.assignmenttwo;
 
+import jakarta.persistence.EntityManager;
+import jakarta.persistence.Query;
 import java.io.IOException;
 import java.util.List;
-import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -18,10 +19,10 @@ import javafx.scene.control.cell.PropertyValueFactory;
 /**
  *
  * @author AndresPinilla 12243141
- * 
- * This class is to control the NotificationAlert.fxml. It has multiple 
- * key events and key actions methods to handle the user interaction.
- * 
+ *
+ * This class is to control the NotificationAlert.fxml. It has multiple key
+ * events and key actions methods to handle the user interaction.
+ *
  */
 public class NotificationsController {
 
@@ -42,9 +43,9 @@ public class NotificationsController {
     private TableColumn<NotificationAlert, String> priorityTable;
 
     /**
-     * This section is to handle the main menu button, it displays the 
-     * primary screen.
-     * 
+     * This section is to handle the main menu button, it displays the primary
+     * screen.
+     *
      * @param event the user clicks the button.
      */
     @FXML
@@ -56,16 +57,16 @@ public class NotificationsController {
             e.printStackTrace();
         }
     }
-    
+
     /**
-     * This section is to initialize the Tableview, Tablecolumns and to set 
+     * This section is to initialize the Tableview, Tablecolumns and to set
      * arial font so it can be compatible with mac OS system.
      */
     @FXML
     private void initialize() {
         // Sets the font style.
         notificationTableView.setStyle("-fx-font-family: 'Arial'");
-        
+
         // Initialize actionPlanTableView columns
         disasterIdTable.setCellValueFactory(
                 new PropertyValueFactory<>("disasterId"));
@@ -79,16 +80,17 @@ public class NotificationsController {
                 new PropertyValueFactory<>("disasterDescription"));
         priorityTable.setCellValueFactory(
                 new PropertyValueFactory<>("levelOfPriority"));
-        
-          // Load the notification data from the CSV file
-    List<NotificationAlert> notifications = 
-            FileUtility.loadNotificationFromCsv("NotificationAlert.csv");
 
-    // Convert the list to an ObservableList
-    ObservableList<NotificationAlert> notificationList = 
-            FXCollections.observableArrayList(notifications);
+        // Load the notification data from the CSV file
+        EntityManagerUtils emu = new EntityManagerUtils();
+        EntityManager em = emu.getEm();
+        Query query = em.createNamedQuery("getAllNotifications");
+        List<NotificationAlert> notifications = query.getResultList();
 
-    // Set the items for the TableView
-    notificationTableView.setItems(notificationList);     
+        // Convert the list to an ObservableList
+        ObservableList<NotificationAlert> notificationList = FXCollections.observableArrayList(notifications);
+
+        // Set the items for the TableView
+        notificationTableView.setItems(notificationList);
     }
 }

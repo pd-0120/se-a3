@@ -47,7 +47,7 @@ public class NotificationAlertTest {
     @BeforeEach
     public void setUp() {
         notification = new NotificationAlert(
-                "DISASTER004",
+                1L,
                 "22-08-2024",
                 "FIRE",
                 "22 Market Street",
