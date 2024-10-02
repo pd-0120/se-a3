@@ -78,9 +78,9 @@ public class EmergencyResponderController {
         List<ActionPlans> actionPlanList = query.getResultList();
 
         // Convert the list to an ObservableList
-        ObservableList<ActionPlans> actionPlans = FXCollections.observableArrayList(actionPlanList);
+        ObservableList<ActionPlans> actionPlansListData = FXCollections.observableArrayList(actionPlanList);
 
-        actionPlans.setAll(actionPlans);
+        actionPlans.setAll(actionPlansListData);
         // Populate ComboBox with disaster IDs.
         planSelectionCombobox.getItems().addAll(getDisasterIdsForActionPlan());
         // Set up event handler for ComboBox.

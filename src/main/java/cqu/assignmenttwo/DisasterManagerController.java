@@ -113,9 +113,9 @@ public class DisasterManagerController {
         List<ActionPlans> actionPlanList = query.getResultList();
 
         // Convert the list to an ObservableList
-        ObservableList<ActionPlans> actionPlans = FXCollections.observableArrayList(actionPlanList);
+        ObservableList<ActionPlans> actionPlansListData = FXCollections.observableArrayList(actionPlanList);
 
-        actionPlans.setAll(actionPlans);
+        actionPlans.setAll(actionPlansListData);
         // Populate ComboBox with disaster IDs
         planSelectionCombobox.getItems().addAll(getDisasterIdsForActionPlan());
         // Set up event handler for ComboBox
@@ -391,13 +391,13 @@ public class DisasterManagerController {
             Long disasterId = selectedActionDone.getDisasterId();
             ResponderAuthority authorityRequired
                     = ResponderAuthority.valueOf(selectedActionDone.getAuthorityRequired());
-            String actionsDone = selectedActionDone.getActionsDone();
+            String actionsDoneObj = selectedActionDone.getActionsDone();
 
             // Create a new Action Done.
             ActionsDone actionsDoneToReport = new ActionsDone(
                     disasterId,
                     authorityRequired,
-                    actionsDone,
+                    actionsDoneObj,
                     selectedReviewActionDecision,
                     providedAdditionalActions
             );

@@ -107,10 +107,10 @@ public class DisasterAssistantController {
         List<DisasterEvent> disasterEventsList = query.getResultList();
 
         // Convert the list to an ObservableList
-        ObservableList<DisasterEvent> disasterEvents = FXCollections.observableArrayList(disasterEventsList);
+        ObservableList<DisasterEvent> disasterEventsListData = FXCollections.observableArrayList(disasterEventsList);
 
         // Load data from CSV file in the observableList.
-        disasterEvents.setAll(disasterEvents);
+        disasterEvents.setAll(disasterEventsListData);
 
         // Populate ComboBox with disaster IDs.
         disasterSelectionCombobox.getItems().addAll(getDisasterIds());
@@ -152,6 +152,7 @@ public class DisasterAssistantController {
     private ObservableList<String> getDisasterIds() {
         ObservableList<String> disasterIds = FXCollections.observableArrayList();
         for (DisasterEvent disasterEvent : disasterEvents) {
+            System.out.println(disasterEvent.getId());
             if (!disasterIds.contains(disasterEvent.getId().toString())) {
                 disasterIds.add(disasterEvent.getId().toString());
             }

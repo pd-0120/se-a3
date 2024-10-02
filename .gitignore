@@ -1,3 +1,15 @@
 target
 /target/
 /nbproject/
+/src/main/resources/META-INF/
+/src/main/resources/META-INF/
+/target/classes/cqu/assignmenttwo/ActionPlans.class
+/target/classes/cqu/assignmenttwo/ActionsDone.class
+/target/classes/cqu/assignmenttwo/DisasterAssistantController.class
+/target/classes/cqu/assignmenttwo/DisasterManagerController.class
+/target/classes/cqu/assignmenttwo/DisasterRegistrationController.class
+/target/classes/cqu/assignmenttwo/EmergencyResponderController.class
+/target/classes/cqu/assignmenttwo/FileUtility.class
+/target/classes/cqu/assignmenttwo/LoginAndRegistrationController.class
+/target/classes/cqu/assignmenttwo/Staff_.class
+/target/generated-sources/annotations/cqu/assignmenttwo/Staff_.java
