@@ -18,6 +18,7 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.KeyEvent;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.Query;
+import java.time.LocalDateTime;
 
 /**
  *
@@ -44,6 +45,13 @@ public class DisasterAssistantController {
     private ResponderAuthority selectedAuthorityRequired;
     // Stores the actions required from the actionRequiredTextArea.
     private String providedActions;
+    
+    // Declare entity manager in class level to avoid redundancy 
+    EntityManagerUtils emu = new EntityManagerUtils();
+    EntityManager em = emu.getEm();
+    
+    // Get the logged-in user
+    Staff loggedInUser = SessionManager.getInstance().getLoggedInUser();
 
     // FXML labels, comboboxes, tableviews and tablecolumns. 
     @FXML
@@ -53,7 +61,7 @@ public class DisasterAssistantController {
     @FXML
     private Label planErrorLabel;
     @FXML
-    private ComboBox<String> disasterSelectionCombobox;
+    private ComboBox<Long> disasterSelectionCombobox;
     @FXML
     private ComboBox<ResponderAuthority> authorityRequiredCombobox;
     @FXML
@@ -65,7 +73,7 @@ public class DisasterAssistantController {
     @FXML
     private TableColumn<DisasterEvent, String> reporterNameTable;
     @FXML
-    private TableColumn<DisasterEvent, String> disasterIdTable;
+    private TableColumn<DisasterEvent, Long> disasterIdTable;
     @FXML
     private TableColumn<DisasterEvent, LocalDate> disasterDateTable;
     @FXML
@@ -74,6 +82,8 @@ public class DisasterAssistantController {
     private TableColumn<DisasterEvent, String> disasterLocationTable;
     @FXML
     private TableColumn<DisasterEvent, String> disasterDescriptionTable;
+    @FXML
+    private TableColumn<DisasterEvent, LocalDateTime> timeStampingTable;
 
     /**
      * This section is to initialize the Tableviews, Tablecolumns and to set
@@ -85,7 +95,7 @@ public class DisasterAssistantController {
         reporterNameTable.setCellValueFactory(
                 new PropertyValueFactory<>("reporterName"));
         disasterIdTable.setCellValueFactory(
-                new PropertyValueFactory<>("disasterId"));
+                new PropertyValueFactory<>("id"));
         disasterDateTable.setCellValueFactory(
                 new PropertyValueFactory<>("disasterDate"));
         // Use a string converter for typeOfDisaster enum.
@@ -96,18 +106,19 @@ public class DisasterAssistantController {
                 new PropertyValueFactory<>("disasterLocation"));
         disasterDescriptionTable.setCellValueFactory(
                 new PropertyValueFactory<>("disasterDescription"));
+        timeStampingTable.setCellValueFactory(
+                new PropertyValueFactory<>("timeStamping"));
 
         // Sets the font style.
         disasterInformationTableView.setStyle("-fx-font-family: 'Arial'");
 
         // Load the notification data from the CSV file
-        EntityManagerUtils emu = new EntityManagerUtils();
-        EntityManager em = emu.getEm();
         Query query = em.createNamedQuery("getAllDisasterEvents");
         List<DisasterEvent> disasterEventsList = query.getResultList();
 
         // Convert the list to an ObservableList
-        ObservableList<DisasterEvent> disasterEventsListData = FXCollections.observableArrayList(disasterEventsList);
+        ObservableList<DisasterEvent> disasterEventsListData = 
+                FXCollections.observableArrayList(disasterEventsList);
 
         // Load data from CSV file in the observableList.
         disasterEvents.setAll(disasterEventsListData);
@@ -149,12 +160,11 @@ public class DisasterAssistantController {
      *
      * @return the disasterId selected from the DisasterEvents.csv
      */
-    private ObservableList<String> getDisasterIds() {
-        ObservableList<String> disasterIds = FXCollections.observableArrayList();
+    private ObservableList<Long> getDisasterIds() {
+        ObservableList<Long> disasterIds = FXCollections.observableArrayList();
         for (DisasterEvent disasterEvent : disasterEvents) {
-            System.out.println(disasterEvent.getId());
-            if (!disasterIds.contains(disasterEvent.getId().toString())) {
-                disasterIds.add(disasterEvent.getId().toString());
+            if (!disasterIds.contains(disasterEvent.getId())) {
+                disasterIds.add(disasterEvent.getId());
             }
         }
         return disasterIds;
@@ -167,12 +177,12 @@ public class DisasterAssistantController {
      */
     @FXML
     private void handleDisasterSelection(ActionEvent event) {
-        String selectedId = disasterSelectionCombobox.getValue();
+        Long selectedId = disasterSelectionCombobox.getValue();
         if (selectedId != null) {
             // Filter the disasterEvents to find the selected one
-            ObservableList<DisasterEvent> filteredReports
-                    = disasterEvents.filtered(disasterEvent
-                            -> disasterEvent.getId().toString().equals(selectedId));
+            ObservableList<DisasterEvent> filteredReports = 
+                    disasterEvents.filtered(disasterEvent -> 
+                            disasterEvent.getId().equals(selectedId));
             // Set the items in the table view
             disasterInformationTableView.setItems(filteredReports);
 
@@ -227,29 +237,45 @@ public class DisasterAssistantController {
      */
     @FXML
     private void alertButton(ActionEvent event) {
-
+       
         // Validates if there is an event and a priority level selected.
         if (selectedEvent != null && selectedPriorityLevel != null) {
+            
             // Capture the data from the selected event
             Long disasterId = selectedEvent.getId();
+            String reporterName = selectedEvent.getReporterName();
             String disasterDate = selectedEvent.getDisasterDate();
             String typeOfDisaster = selectedEvent.getTypeOfDisasterAsString();
             String disasterLocation = selectedEvent.getDisasterLocation();
             String disasterDescription = selectedEvent.getDisasterDescription();
+            
+            // Validate existent notifications to prevent duplicities.
+            try {
+            Query queryNotification = em.createNamedQuery("findRegisteredNotifications");
+            queryNotification.setParameter("disasterId", disasterId);
+            List<NotificationAlert> existingAlerts =  queryNotification.getResultList();
 
+            if (!existingAlerts.isEmpty()) {
+                // Display an error message if an alert already exists
+                notificationErrorLabel.setText("A Notification Alert already exists for this disaster.");
+                notificationErrorLabel.setVisible(true);
+                notificationCreatedLabel.setVisible(false);
+                return; // Stop further execution
+            }
+            
             // Create a new NotificationAlert
             NotificationAlert notificationAlert = new NotificationAlert(
                     disasterId,
+                    reporterName,
                     disasterDate,
                     typeOfDisaster,
                     disasterLocation,
                     disasterDescription,
-                    selectedPriorityLevel
+                    selectedPriorityLevel,
+                    LocalDateTime.now(),
+                    loggedInUser // Pass the logged-in user
             );
-
-            // Save the data in the database
-            EntityManagerUtils emu = new EntityManagerUtils();
-            EntityManager em = emu.getEm();
+ 
             em.getTransaction().begin();
             em.persist(notificationAlert);
             em.getTransaction().commit();
@@ -261,6 +287,10 @@ public class DisasterAssistantController {
 
             // Hides the error message when the notification is created.
             notificationErrorLabel.setVisible(false);
+            
+            } catch (Exception e) {
+            e.printStackTrace();
+        }
 
         } else {
             // Displays a message to inform there is an error 
@@ -292,43 +322,68 @@ public class DisasterAssistantController {
         // were selected.
         if (selectedEvent != null && selectedPriorityLevel != null
                 && selectedAuthorityRequired != null && providedActions != null) {
+
             // Capture the data from the selected event
             Long disasterId = selectedEvent.getId();
 
-            // Create a new Action Plan
-            ActionPlans actionPlan = new ActionPlans(
-                    disasterId,
-                    selectedPriorityLevel,
-                    selectedAuthorityRequired,
-                    providedActions,
-                    // Manager review, it is filled with 0 because they are not 
-                    //provided in this screen.
-                    "0",
-                    // Changes required, it is filled with 0 because they are 
-                    // not provided in this screen.
-                    "0"
-            );
-
-            // Store action plan in the database
-            EntityManagerUtils emu = new EntityManagerUtils();
-            EntityManager em = emu.getEm();
-            em.getTransaction().begin();
-            em.persist(actionPlan);
-            em.getTransaction().commit();
-            // Save the action plan in the plan list.
-//            planList.add(actionPlan);
-//
-//            // Save the plan list to a CSV file.
-//            FileUtility.saveActionPlanToCsv(planList, "ActionPlan.csv");
-            // Hides the error message because the action plan was created.
-            planErrorLabel.setVisible(false);
-
-            // Displays the Disaster assistant menu screen.
             try {
-                App.setRoot("DisasterAssistantMenu");
-            } catch (IOException e) {
-                // Handle IOException if there is an issue loading the new screen
+                // Query to check if an action plan for this disasterId already exists
+                Query queryActionPlan = em.createNamedQuery("findRegisteredActionPlans");
+                queryActionPlan.setParameter("disasterId", disasterId);
+
+                List<ActionPlans> existingActionPlans = queryActionPlan.getResultList();
+
+                em.getTransaction().begin();
+
+                if (!existingActionPlans.isEmpty()) {
+                    // If an action plan exists, overwrite it with the new data
+                    ActionPlans actionPlan = existingActionPlans.get(0); // Get the existing plan
+                    actionPlan.setLevelOfPriority(selectedPriorityLevel);
+                    actionPlan.setAuthorityRequired(selectedAuthorityRequired);
+                    actionPlan.setActionsRequired(providedActions);
+                    actionPlan.setPlanReview("Pending Review");
+                    // changes required are empty because the assistant just adjust 
+                    // the report.
+                    actionPlan.setPlanChanges("");
+                    LocalDateTime.now();
+                    actionPlan.setCreatedBy(loggedInUser); // Pass the logged-in user
+
+                    em.merge(actionPlan); // Update the existing action plan
+
+                } else {
+                    // If no action plan exists, create a new one
+                    ActionPlans actionPlan = new ActionPlans(
+                            disasterId,
+                            selectedPriorityLevel,
+                            selectedAuthorityRequired,
+                            providedActions,
+                            "Pending Review",
+                            "", // No changes required initially
+                            LocalDateTime.now(),
+                            loggedInUser // Pass the logged-in user
+                            
+                    );
+
+                    em.persist(actionPlan); // Persist the new action plan
+
+                }
+
+                em.getTransaction().commit(); // Commit the transaction
+
+                // Hide error label after creating/updating the plan
+                planErrorLabel.setVisible(false);
+
+                // Redirect to the Disaster Assistant menu screen
+                try {
+                    App.setRoot("DisasterAssistantMenu");
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+
+            } catch (Exception e) {
                 e.printStackTrace();
+            } finally {
+                em.close(); // Close the EntityManager
             }
 
         } else {
@@ -337,8 +392,6 @@ public class DisasterAssistantController {
                     + "the level of priority, \nthe authority required and "
                     + "provide the actions required");
             planErrorLabel.setVisible(true);
-
         }
     }
-
 }

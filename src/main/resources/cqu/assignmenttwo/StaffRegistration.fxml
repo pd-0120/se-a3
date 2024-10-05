@@ -48,16 +48,6 @@
             <Font name="Arial" size="13.0" />
          </font>
       </TextField>
-      <Label layoutX="250.0" layoutY="260.0" text="Staff Id">
-         <font>
-            <Font name="Arial" size="16.0" />
-         </font>
-      </Label>
-      <TextField fx:id="staffIdRegistration" editable="false" layoutX="400.0" layoutY="260.0">
-         <font>
-            <Font name="Arial" size="13.0" />
-         </font>
-      </TextField>
       <Label layoutX="250.0" layoutY="380.0" text="Staff Name">
          <font>
             <Font name="Arial" size="16.0" />

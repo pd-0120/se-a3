@@ -13,7 +13,7 @@
 <?import javafx.scene.shape.Line?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="765.0" prefWidth="1000.0" style="-fx-background-color: MediumSeaGreen;" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="cqu.assignmenttwo.DisasterManagerController">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="765.0" prefWidth="1200.0" style="-fx-background-color: MediumSeaGreen;" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="cqu.assignmenttwo.DisasterManagerController">
    <children>
       <Label layoutX="102.0" layoutY="62.0" text="Disaster Event Manager">
          <font>
@@ -109,7 +109,7 @@
          </font>
       </Label>
       <ComboBox fx:id="planReviewCombobox" layoutX="300.0" layoutY="298.0" onAction="#handlerPlanReviewSelection" prefHeight="26.0" prefWidth="162.0" />
-      <TableView fx:id="actionPlanTableView" layoutX="299.0" layoutY="213.0" prefHeight="68.0" prefWidth="628.0">
+      <TableView fx:id="actionPlanTableView" layoutX="299.0" layoutY="213.0" prefHeight="68.0" prefWidth="897.0">
         <columns>
           <TableColumn fx:id="disasterIdTable" prefWidth="89.0" text="Disaster Id" />
           <TableColumn fx:id="priorityTable" prefWidth="97.0" text="Level Of Priority" />
@@ -117,6 +117,8 @@
             <TableColumn fx:id="actionsRequiredTable" prefWidth="97.0" text="Actions Required" />
             <TableColumn fx:id="planReviewTable" prefWidth="105.0" text="Manager Review" />
             <TableColumn fx:id="planChangesTable" prefWidth="130.0" text="Changes Required" />
+            <TableColumn fx:id="timeStampingTable" prefWidth="146.0" text="Time Stamping" />
+            <TableColumn fx:id="createdByTable" prefWidth="121.0" text="Non-Repudiation" />
         </columns>
       </TableView>
       <Label fx:id="planErrorLabel" layoutX="549.0" layoutY="357.0" text="Plan error" textFill="FIREBRICK" visible="false">
@@ -125,13 +127,15 @@
          </font>
       </Label>
       <TextArea fx:id="planChangesTextArea" editable="false" layoutX="707.0" layoutY="294.0" onKeyTyped="#changesRequiredTextArea" prefHeight="48.0" prefWidth="224.0" />
-      <TableView fx:id="actionDoneTableView" layoutX="300.0" layoutY="511.0" prefHeight="68.0" prefWidth="628.0">
+      <TableView fx:id="actionDoneTableView" layoutX="300.0" layoutY="511.0" prefHeight="68.0" prefWidth="897.0">
          <columns>
             <TableColumn fx:id="disasterIdActionDoneTable" prefWidth="97.0" text="Disaster Id" />
             <TableColumn fx:id="authorityActionDoneTable" prefWidth="120.0" text="Authority Required" />
             <TableColumn fx:id="actionsDoneTable" prefWidth="110.0" text="Actions Done" />
             <TableColumn fx:id="actionsReviewTable" prefWidth="114.0" text="Manager Review" />
             <TableColumn fx:id="additionalActionsTable" prefWidth="185.0" text="Additional Actions Required" />
+            <TableColumn fx:id="timeStampingActionsTable" prefWidth="146.0" text="Time Stamping" />
+            <TableColumn fx:id="createdByActionsTable" prefWidth="121.0" text="Non-Repudiation" />
          </columns>
       </TableView>
       <Label layoutX="500.0" layoutY="599.0" text="Additional Actions required">

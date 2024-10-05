@@ -3,6 +3,7 @@ package cqu.assignmenttwo;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.Query;
 import java.io.IOException;
+import java.time.LocalDateTime;
 import java.util.LinkedList;
 import java.util.List;
 import javafx.beans.property.SimpleStringProperty;
@@ -53,16 +54,23 @@ public class DisasterManagerController {
     private String selectedReviewActionDecision;
     // Stores the provided Changes Required from the actionRequiredTextArea.
     private String providedAdditionalActions;
+    
+    // Declare entity manager in class level to avoid redundancy 
+    EntityManagerUtils emu = new EntityManagerUtils();
+    EntityManager em = emu.getEm();
+    
+    // Get the logged-in user
+    Staff loggedInUser = SessionManager.getInstance().getLoggedInUser();
 
     // FXML labels, comboboxes, tableviews and tablecolumns. 
     @FXML
-    private ComboBox<String> planSelectionCombobox;
+    private ComboBox<Long> planSelectionCombobox;
     @FXML
     private ComboBox<String> planReviewCombobox;
     @FXML
     private TableView<ActionPlans> actionPlanTableView;
     @FXML
-    private TableColumn<ActionPlans, String> disasterIdTable;
+    private TableColumn<ActionPlans, Long> disasterIdTable;
     @FXML
     private TableColumn<ActionPlans, String> priorityTable;
     @FXML
@@ -74,13 +82,17 @@ public class DisasterManagerController {
     @FXML
     private TableColumn<ActionPlans, String> planChangesTable;
     @FXML
+    private TableColumn<ActionPlans, LocalDateTime> timeStampingTable;
+    @FXML
+    private TableColumn<ActionPlans, String> createdByTable;
+    @FXML
     private Label planErrorLabel;
     @FXML
-    private ComboBox<String> actionDoneSelectionCombobox;
+    private ComboBox<Long> actionDoneSelectionCombobox;
     @FXML
     private TableView<ActionsDone> actionDoneTableView;
     @FXML
-    private TableColumn<ActionsDone, String> disasterIdActionDoneTable;
+    private TableColumn<ActionsDone, Long> disasterIdActionDoneTable;
     @FXML
     private TableColumn<ActionsDone, String> authorityActionDoneTable;
     @FXML
@@ -89,6 +101,10 @@ public class DisasterManagerController {
     private TableColumn<ActionsDone, String> actionsReviewTable;
     @FXML
     private TableColumn<ActionsDone, String> additionalActionsTable;
+    @FXML
+    private TableColumn<ActionsDone, LocalDateTime> timeStampingActionsTable;
+    @FXML
+    private TableColumn<ActionsDone, String> createdByActionsTable;
     @FXML
     private ComboBox<String> actionDoneReviewCombobox;
     @FXML
@@ -107,13 +123,13 @@ public class DisasterManagerController {
         // Sets the font style of planSelectionCombobox
         planSelectionCombobox.setStyle("-fx-font-family: 'Arial'");
         // Load data from CSV file in the observableList
-        EntityManagerUtils emu = new EntityManagerUtils();
-        EntityManager em = emu.getEm();
+        
         Query query = em.createNamedQuery("getAllActionPlans");
         List<ActionPlans> actionPlanList = query.getResultList();
 
         // Convert the list to an ObservableList
-        ObservableList<ActionPlans> actionPlansListData = FXCollections.observableArrayList(actionPlanList);
+        ObservableList<ActionPlans> actionPlansListData = 
+                FXCollections.observableArrayList(actionPlanList);
 
         actionPlans.setAll(actionPlansListData);
         // Populate ComboBox with disaster IDs
@@ -136,6 +152,18 @@ public class DisasterManagerController {
                 new PropertyValueFactory<>("planReview"));
         planChangesTable.setCellValueFactory(
                 new PropertyValueFactory<>("planChanges"));
+        timeStampingTable.setCellValueFactory(
+                new PropertyValueFactory<>("timeStamping"));
+        createdByTable.setCellValueFactory(cellData -> {
+            // Get the Staff entity linked to the Action Plan (createdBy)
+            Staff createdByStaff = cellData.getValue().getCreatedBy();
+
+            // Stores the retrieved name
+            String staffName = createdByStaff.getName();
+
+            // Return a SimpleStringProperty wrapped in an ObservableValue
+            return new SimpleStringProperty(staffName);
+        });
         // Sets the font style
         actionPlanTableView.setStyle("-fx-font-family: 'Arial'");
 
@@ -153,8 +181,17 @@ public class DisasterManagerController {
 
         // Sets the font style of actionDoneSelectionCombobox
         actionDoneSelectionCombobox.setStyle("-fx-font-family: 'Arial'");
-        // Load data from CSV file in the observableList
-        actionsDone.setAll(FileUtility.loadActionsDoneFromCsv("ActionsDone.csv"));
+        
+        // Query to retrieve the  actions done regustered
+        Query queryActionsDone = em.createNamedQuery("getAllActionsDone");
+        List<ActionsDone> actionsDoneList = queryActionsDone.getResultList();
+
+        // Convert the list to an ObservableList
+        ObservableList<ActionsDone> actionsDoneListData = 
+                FXCollections.observableArrayList(actionsDoneList);
+
+        actionsDone.setAll(actionsDoneListData);
+               
         // Populate ComboBox with disaster IDs
         actionDoneSelectionCombobox.getItems().addAll(getDisasterIdsForActionsDone());
         // Set up event handler for ComboBox
@@ -172,6 +209,18 @@ public class DisasterManagerController {
                 new PropertyValueFactory<>("actionsDoneReview"));
         additionalActionsTable.setCellValueFactory(
                 new PropertyValueFactory<>("additionalActions"));
+        timeStampingActionsTable.setCellValueFactory(
+                new PropertyValueFactory<>("timeStamping"));
+        createdByActionsTable.setCellValueFactory(cellData -> {
+            // Get the Staff entity linked to the Actions Done (createdBy)
+            Staff createdByStaff = cellData.getValue().getCreatedBy();
+
+            // Stores the retrieved name
+            String staffName = createdByStaff.getName();
+
+            // Return a SimpleStringProperty wrapped in an ObservableValue
+            return new SimpleStringProperty(staffName);
+        });
         // Sets the font style
         actionDoneTableView.setStyle("-fx-font-family: 'Arial'");
 
@@ -192,11 +241,11 @@ public class DisasterManagerController {
      *
      * @return the action plan id selected.
      */
-    private ObservableList<String> getDisasterIdsForActionPlan() {
-        ObservableList<String> disasterIds = FXCollections.observableArrayList();
+    private ObservableList<Long> getDisasterIdsForActionPlan() {
+        ObservableList<Long> disasterIds = FXCollections.observableArrayList();
         for (ActionPlans actionPlan : actionPlans) {
-            if (!disasterIds.contains(actionPlan.getDisasterId().toString())) {
-                disasterIds.add(actionPlan.getDisasterId().toString());
+            if (!disasterIds.contains(actionPlan.getDisasterId())) {
+                disasterIds.add(actionPlan.getDisasterId());
             }
         }
         System.out.println(disasterIds);
@@ -211,11 +260,11 @@ public class DisasterManagerController {
      */
     @FXML
     private void handlePlanSelection(ActionEvent event) {
-        String selectedId = planSelectionCombobox.getValue();
+        Long selectedId = planSelectionCombobox.getValue();
         if (selectedId != null) {
             // Filter the action plan to find the selected one.
             ObservableList<ActionPlans> filteredReports = actionPlans.filtered(
-                    actionPlan -> actionPlan.getDisasterId().toString().equals(selectedId));
+                    actionPlan -> actionPlan.getDisasterId().equals(selectedId));
             // Set the items in the table view
             actionPlanTableView.setItems(filteredReports);
 
@@ -277,35 +326,63 @@ public class DisasterManagerController {
                     = ResponderAuthority.valueOf(selectedActionPlan.getAuthorityRequired());
             String actionsRequired = selectedActionPlan.getActionsRequired();
 
-            // Create a new Action Plan
-            ActionPlans actionPlan = new ActionPlans(
+            try {
+            // Query to check if an action plan for this disasterId already exists
+            Query queryActionPlan = em.createNamedQuery("findRegisteredActionPlans");
+            queryActionPlan.setParameter("disasterId", disasterId);
+            
+            List<ActionPlans> existingActionPlans = queryActionPlan.getResultList();
+            
+            em.getTransaction().begin();
+            
+            if (!existingActionPlans.isEmpty()) {
+                // If an action plan exists, overwrite it with the new data
+                ActionPlans actionPlan = existingActionPlans.get(0); // Get the existing plan
+                actionPlan.setLevelOfPriority(levelOfPriority);
+                actionPlan.setAuthorityRequired(authorityRequired);
+                actionPlan.setActionsRequired(actionsRequired);
+                actionPlan.setPlanReview(selectedReviewPlanDecision);
+                actionPlan.setPlanChanges(providedChangesRequired); 
+                LocalDateTime.now();
+                actionPlan.setCreatedBy(loggedInUser); // Pass the logged-in user
+
+                em.merge(actionPlan); // Update the existing action plan
+                 
+            } else {
+                // If no action plan exists, create a new one
+                ActionPlans actionPlan = new ActionPlans(
                     disasterId,
                     levelOfPriority,
                     authorityRequired,
                     actionsRequired,
                     selectedReviewPlanDecision,
-                    providedChangesRequired
-            );
-            // Save the plan in the action plan list.
-            // Load the notification data from the CSV file
-            EntityManagerUtils emu = new EntityManagerUtils();
-            EntityManager em = emu.getEm();
-            em.getTransaction().begin();
-            em.persist(actionPlan);
-            em.getTransaction().commit();
-
-            // Hides the error message when the action plan is created.
+                    providedChangesRequired,
+                    LocalDateTime.now(),
+                    loggedInUser // Pass the logged-in user
+                );
+                
+                em.persist(actionPlan); // Persist the new action plan
+            }
+            
+            em.getTransaction().commit(); // Commit the transaction
+            
+            // Hide error label after creating/updating the plan
             planErrorLabel.setVisible(false);
-
+            
             // Displays the Disaster manager menu screen.
             try {
                 App.setRoot("DisasterManagerMenu");
             } catch (IOException e) {
-                // Handle IOException if there is an issue loading the new screen
                 e.printStackTrace();
             }
 
-        } else {
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            em.close(); // Close the EntityManager
+        }
+
+    } else {
             // Displays a message to inform there is an error.
             planErrorLabel.setText("Error. Please select an Action Plan and a "
                     + "Review Decision");
@@ -318,11 +395,11 @@ public class DisasterManagerController {
      *
      * @return the action done report selected.
      */
-    private ObservableList<String> getDisasterIdsForActionsDone() {
-        ObservableList<String> disasterIds = FXCollections.observableArrayList();
+    private ObservableList<Long> getDisasterIdsForActionsDone() {
+        ObservableList<Long> disasterIds = FXCollections.observableArrayList();
         for (ActionsDone actionDone : actionsDone) {
-            if (!disasterIds.contains(actionDone.getDisasterId().toString())) {
-                disasterIds.add(actionDone.getDisasterId().toString());
+            if (!disasterIds.contains(actionDone.getDisasterId())) {
+                disasterIds.add(actionDone.getDisasterId());
             }
         }
         return disasterIds;
@@ -336,11 +413,11 @@ public class DisasterManagerController {
      */
     @FXML
     private void handlerActionDoneSelection(ActionEvent event) {
-        String selectedId = actionDoneSelectionCombobox.getValue();
+        Long selectedId = actionDoneSelectionCombobox.getValue();
         if (selectedId != null) {
             // Filter the Actions done to find the selected one.
             ObservableList<ActionsDone> filteredReports = actionsDone.filtered(
-                    actionDone -> actionDone.getDisasterId().toString().equals(selectedId));
+                    actionDone -> actionDone.getDisasterId().equals(selectedId));
             // Set the items in the table view.
             actionDoneTableView.setItems(filteredReports);
 
@@ -393,29 +470,62 @@ public class DisasterManagerController {
                     = ResponderAuthority.valueOf(selectedActionDone.getAuthorityRequired());
             String actionsDoneObj = selectedActionDone.getActionsDone();
 
-            // Create a new Action Done.
-            ActionsDone actionsDoneToReport = new ActionsDone(
-                    disasterId,
-                    authorityRequired,
-                    actionsDoneObj,
-                    selectedReviewActionDecision,
-                    providedAdditionalActions
-            );
-            EntityManagerUtils emu = new EntityManagerUtils();
-            EntityManager em = emu.getEm();
-            em.getTransaction().begin();
-            em.persist(actionsDoneToReport);
-            em.getTransaction().commit();
-
-            // Hides the error message when the action done is created.
-            actionDoneErrorLabel.setVisible(false);
-            // Displays the Disaster manager menu screen.
             try {
-                App.setRoot("DisasterManagerMenu");
-            } catch (IOException e) {
-                // Handle IOException if there is an issue loading the new screen
+                // Query to check if an action done for this disasterId already exists
+                Query queryActionDone = em.createNamedQuery("findRegisteredActionsDone");
+                queryActionDone.setParameter("disasterId", disasterId);
+
+                List<ActionsDone> existingActionsDone = queryActionDone.getResultList();
+
+                em.getTransaction().begin();
+
+                if (!existingActionsDone.isEmpty()) {
+                    // If an action plan exists, overwrite it with the new data
+                    ActionsDone actionDone = existingActionsDone.get(0); // Get the existing plan
+                    actionDone.setAuthorityRequired(authorityRequired);
+                    actionDone.setActionsDone(actionsDoneObj);
+                    actionDone.setActionsDoneReview(selectedReviewActionDecision);
+                    // changes required are empty because the responder just adjust 
+                    // the report.
+                    actionDone.setAdditionalActions(providedAdditionalActions);
+                    LocalDateTime.now();
+                    actionDone.setCreatedBy(loggedInUser); // Pass the logged-in user
+
+                    em.merge(actionDone); // Update the existing action done
+
+                } else {
+                    // If no actions done exist, create a new one
+                    ActionsDone actionsReport = new ActionsDone(
+                            disasterId,
+                            authorityRequired,
+                            actionsDoneObj,
+                            selectedReviewActionDecision,
+                            providedAdditionalActions,
+                            LocalDateTime.now(),
+                            loggedInUser // Pass the logged-in user
+                    );
+                    // Persist the new action done
+                    em.persist(actionsReport);
+                }
+
+                em.getTransaction().commit(); // Commit the transaction
+
+                // Hide error label after creating/updating the plan
+                planErrorLabel.setVisible(false);
+
+                // Displays the Disaster manager menu screen.
+                try {
+                    App.setRoot("DisasterManagerMenu");
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+
+            } catch (Exception e) {
                 e.printStackTrace();
+            } finally {
+                em.close(); // Close the EntityManager
             }
+
         } else {
             // Displays a message to inform there is an error. 
             actionDoneErrorLabel.setText("Error. Please select an Action Done "

@@ -7,7 +7,9 @@ package cqu.assignmenttwo;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.Query;
 import java.io.IOException;
+import java.time.LocalDateTime;
 import java.util.List;
+import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -30,7 +32,9 @@ public class NotificationsController {
     @FXML
     private TableView<NotificationAlert> notificationTableView;
     @FXML
-    private TableColumn<NotificationAlert, String> disasterIdTable;
+    private TableColumn<NotificationAlert, String> reporterNameTable;
+    @FXML
+    private TableColumn<NotificationAlert, Long> disasterIdTable;
     @FXML
     private TableColumn<NotificationAlert, String> dateTable;
     @FXML
@@ -41,7 +45,11 @@ public class NotificationsController {
     private TableColumn<NotificationAlert, String> descriptionTable;
     @FXML
     private TableColumn<NotificationAlert, String> priorityTable;
-
+    @FXML
+    private TableColumn<NotificationAlert, LocalDateTime> timeStampingTable;
+    @FXML
+    private TableColumn<NotificationAlert, String> createdByTable;
+    
     /**
      * This section is to handle the main menu button, it displays the primary
      * screen.
@@ -68,6 +76,8 @@ public class NotificationsController {
         notificationTableView.setStyle("-fx-font-family: 'Arial'");
 
         // Initialize actionPlanTableView columns
+        reporterNameTable.setCellValueFactory(
+                new PropertyValueFactory<>("reporterName"));
         disasterIdTable.setCellValueFactory(
                 new PropertyValueFactory<>("disasterId"));
         dateTable.setCellValueFactory(
@@ -80,7 +90,19 @@ public class NotificationsController {
                 new PropertyValueFactory<>("disasterDescription"));
         priorityTable.setCellValueFactory(
                 new PropertyValueFactory<>("levelOfPriority"));
+        timeStampingTable.setCellValueFactory(
+                new PropertyValueFactory<>("timeStamping"));
+        createdByTable.setCellValueFactory(cellData -> {
+            // Get the Staff entity linked to the NotificationAlert (createdBy)
+            Staff createdByStaff = cellData.getValue().getCreatedBy();
 
+            // Stores the retrieved name
+            String staffName = createdByStaff.getName();
+
+            // Return a SimpleStringProperty wrapped in an ObservableValue
+            return new SimpleStringProperty(staffName);
+        });
+        
         // Load the notification data from the DB
         EntityManagerUtils emu = new EntityManagerUtils();
         EntityManager em = emu.getEm();
@@ -88,7 +110,8 @@ public class NotificationsController {
         List<NotificationAlert> notifications = query.getResultList();
 
         // Convert the list to an ObservableList
-        ObservableList<NotificationAlert> notificationList = FXCollections.observableArrayList(notifications);
+        ObservableList<NotificationAlert> notificationList = 
+                FXCollections.observableArrayList(notifications);
 
         // Set the items for the TableView
         notificationTableView.setItems(notificationList);

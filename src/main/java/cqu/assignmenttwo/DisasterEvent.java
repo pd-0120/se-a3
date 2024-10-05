@@ -6,11 +6,15 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
 import jakarta.persistence.NamedQuery;
-import java.util.StringJoiner;
+import java.time.LocalDateTime;
 
 /**
  *
- * @author PJ
+ * @author PJ - Andres Pinilla
+ * 
+ * This class is to stored the disaster events objects. It has getters and setters
+ * to access the different types of data stored and queries to interact with the
+ * database.
  */
 @Entity
 @NamedQuery(name = "getAllDisasterEvents", query = "SELECT d from DisasterEvent d")
@@ -20,7 +24,6 @@ public class DisasterEvent implements Serializable {
     @jakarta.persistence.Id
     @jakarta.persistence.GeneratedValue(strategy = jakarta.persistence.GenerationType.AUTO)
     private Long id;
-    private Long disasterId;
 //    @Temporal(TemporalType.DATE)
     private LocalDate disasterDate;
     private String reporterName;
@@ -30,14 +33,15 @@ public class DisasterEvent implements Serializable {
     @Enumerated(EnumType.STRING)
     private TypeOfDisaster typeOfDisaster;
     private String disasterDescription;
+    private LocalDateTime timeStamping;
 
     public DisasterEvent() {
     }
 
     public DisasterEvent(String reporterName, int reporterMobile,
-            String reporterAddress,
-            LocalDate disasterDate, TypeOfDisaster typeOfDisaster,
-            String disasterLocation, String disasterDescription) {
+            String reporterAddress, LocalDate disasterDate, 
+            TypeOfDisaster typeOfDisaster, String disasterLocation, 
+            String disasterDescription, LocalDateTime timeStamping) {
         this.disasterDate = disasterDate;
         this.reporterName = reporterName;
         this.reporterMobile = reporterMobile;
@@ -45,14 +49,7 @@ public class DisasterEvent implements Serializable {
         this.disasterLocation = disasterLocation;
         this.typeOfDisaster = typeOfDisaster;
         this.disasterDescription = disasterDescription;
-    }
-
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
+        this.timeStamping = LocalDateTime.now();
     }
 
     @Override
@@ -80,24 +77,14 @@ public class DisasterEvent implements Serializable {
         return "cqu.assignmenttwo.DisasterEvent[ id=" + id + " ]";
     }
 
-    // Getters and Setters
-    /**
-     * Gets the disaster id associated with the disaster event.
-     *
-     * @return The disaster id in String format.
-     */
-    public Long getDisasterId() {
+    //Getters and Setters
+    public Long getId() {
         return id;
     }
 
-    /**
-     * Sets the disaster id associated with the disaster event.
-     *
-     */
-    public void setDisasterId(Long disasterId) {
-        this.disasterId = disasterId;
+    public void setId(Long id) {
+        this.id = id;
     }
-
     /**
      * Gets the disaster date as a string.
      *
@@ -216,34 +203,13 @@ public class DisasterEvent implements Serializable {
     public void setDisasterDescription(String disasterDescription) {
         this.disasterDescription = disasterDescription;
     }
-
+    
     /**
-     * Converts the disaster event details to a CSV formatted string.
+     * Gets the date and time when disaster was registered.
      *
-     * @return a new string for each new disaster event.
+     * @return The date and time when the disaster was registered in String format.
      */
-    public String toCsvStringDisasterEvent() {
-        StringJoiner joiner = new StringJoiner(",");
-        joiner.add(getReporterName())
-                .add(Integer.toString(getReporterMobile()))
-                .add(getReporterAddress())
-                .add(getId().toString())
-                .add(getDisasterDate())
-                .add(getTypeOfDisasterAsString())
-                .add(getDisasterLocation())
-                .add(getDisasterDescription());
-        return joiner.toString();
-    }
-
-    /**
-     * Gets the CSV header for the disaster event information.
-     *
-     * @return The CSV header.
-     */
-    public String getCsvDisasterHeader() {
-
-        return "ReporterName,ReporterMobile,ReporterAddress,DisasterId,"
-                + "DisasterDate,TypeOfDisaster,DisasterLocation,"
-                + "DisasterDescription";
+    public String getTimeStamping() {
+        return timeStamping.toString(); // Returns date and time as a string
     }
 }

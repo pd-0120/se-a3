@@ -5,14 +5,22 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
 import jakarta.persistence.NamedQuery;
+import java.time.LocalDateTime;
 import java.util.StringJoiner;
 
 /**
  *
- * @author PJ
+ * @author PJ - Andres Pinilla
+ * 
+ * * This class is to create the Action Plan objects. It has getters and setters
+ * to access the different types of data. It validates the data to prevent 
+ * duplicities and persist the objects to store the information in the database.
  */
 @Entity
-@NamedQuery(name = "getAllActionPlans", query = "SELECT a from ActionPlans a")
+@NamedQuery(name = "getAllActionPlans", 
+            query = "SELECT a from ActionPlans a")
+@NamedQuery(name = "findRegisteredActionPlans", 
+            query = "SELECT a FROM ActionPlans a WHERE a.disasterId = :disasterId")
 public class ActionPlans implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -36,18 +44,22 @@ public class ActionPlans implements Serializable {
     private String actionsRequired;
     private String planReview;
     private String planChanges;
+    private LocalDateTime timeStamping;
+    private Staff createdBy;
 
     //Constructor
     public ActionPlans(Long disasterId, String levelOfPriority,
             ResponderAuthority authorityRequired,
             String actionsRequired, String planReview,
-            String planChanges) {
+            String planChanges, LocalDateTime timeStamping, Staff createdBy) {
         this.disasterId = disasterId;
         this.levelOfPriority = levelOfPriority;
         this.authorityRequired = authorityRequired;
         this.actionsRequired = actionsRequired;
         this.planReview = planReview;
         this.planChanges = planChanges;
+        this.timeStamping = LocalDateTime.now();
+        this.createdBy = createdBy;
     }
 
     public ActionPlans() {
@@ -155,32 +167,30 @@ public class ActionPlans implements Serializable {
     public void setPlanReview(String planReview) {
         this.planReview = planReview;
     }
-
+    
     /**
-     * Converts the Action Plan details to a CSV formatted string.
+     * Gets the date and time when the action plan was registered.
      *
-     * @return a new string for each new action plan.
+     * @return The date and time when the action plan was registered in String format.
      */
-    public String toCsvStringActionPlan() {
-        StringJoiner joiner = new StringJoiner(",");
-        joiner.add(getDisasterId().toString())
-                .add(getLevelOfPriority())
-                .add(getAuthorityRequired())
-                .add(getActionsRequired())
-                .add(getPlanReview())
-                .add(getPlanChanges());
-        return joiner.toString();
+    public String getTimeStamping() {
+        return timeStamping.toString(); // Returns date and time as a string
+    }
+    
+    /**
+     * Gets the staff member logged to identify who creates or modifies the report.
+     * 
+     * @return the staff id
+     */
+    public Staff getCreatedBy() {
+        return createdBy;
     }
 
     /**
-     * Gets the CSV header for the action plan information.
+     * Sets the staff member who creates or modifies the report.
      *
-     * @return The CSV header.
      */
-    public String getCsvActionPlan() {
-
-        return "DisasterId,LevelOfPriority,AuthorityRequired,ActionsRequired,"
-                + "ManagerReview,ChangesRequired";
+    public void setCreatedBy(Staff createdBy) {
+        this.createdBy = createdBy;
     }
-
 }

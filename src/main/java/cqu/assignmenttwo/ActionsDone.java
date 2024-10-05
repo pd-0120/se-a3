@@ -6,13 +6,22 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
 import jakarta.persistence.NamedQuery;
+import java.time.LocalDateTime;
 
 
 /**
  *
- * @author PJ
+ * @author PJ - Andres Pinilla
+ * 
+ * This class is to create the Actions Done objects. It has getters and setters
+ * to access the different types of data. It validates the data to prevent 
+ * duplicities and persist the objects to store the information in the database.
  */
 @Entity
+@NamedQuery(name = "getAllActionsDone", 
+            query = "SELECT ac from ActionsDone ac")
+@NamedQuery(name = "findRegisteredActionsDone", 
+            query = "SELECT ac FROM ActionsDone ac WHERE ac.disasterId = :disasterId")
 public class ActionsDone implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -21,10 +30,13 @@ public class ActionsDone implements Serializable {
     private Long id;
     //Attributes
     private Long disasterId;
+    @Enumerated(EnumType.STRING)
     private ResponderAuthority authorityRequired;
     private String actionsDone;
     private String actionsDoneReview;
     private String additionalActions;
+    private LocalDateTime timeStamping;
+    private Staff createdBy;
 
     public ActionsDone() {
     }
@@ -32,20 +44,14 @@ public class ActionsDone implements Serializable {
     //Constructor
     public ActionsDone(Long disasterId, ResponderAuthority authorityRequired,
             String actionsDone, String actionsDoneReview,
-            String additionalActions) {
+            String additionalActions, LocalDateTime timeStamping, Staff createdBy) {
         this.disasterId = disasterId;
         this.authorityRequired = authorityRequired;
         this.actionsDone = actionsDone;
         this.actionsDoneReview = actionsDoneReview;
         this.additionalActions = additionalActions;
-    }
-
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
+        this.timeStamping = LocalDateTime.now();
+        this.createdBy = createdBy;
     }
 
     @Override
@@ -69,6 +75,13 @@ public class ActionsDone implements Serializable {
     }
 
     //Getters and Setters
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
     /**
      * Gets the decision review by the disaster manager.
      *
@@ -151,29 +164,28 @@ public class ActionsDone implements Serializable {
     }
 
     /**
-     * Converts the Actions Done details to a CSV formatted string.
+     * Gets the date and time when the action plan was registered.
      *
-     * @return a new string for each new actions done report.
+     * @return The date and time when the action plan was registered in String format.
      */
-    public String toCsvStringActionDone() {
-        StringJoiner joiner = new StringJoiner(",");
-        joiner.add(getDisasterId().toString())
-                .add(getAuthorityRequired())
-                .add(getActionsDone())
-                .add(getActionsDoneReview())
-                .add(getAdditionalActions());
-        return joiner.toString();
+    public String getTimeStamping() {
+        return timeStamping.toString(); // Returns date and time as a string
+    }
+    
+    /**
+     * Gets the staff member logged to identify who creates or modifies the report.
+     * 
+     * @return the staff id
+     */
+    public Staff getCreatedBy() {
+        return createdBy;
     }
 
     /**
-     * Gets the CSV header for the actions done information.
+     * Sets the staff member who creates or modifies the report.
      *
-     * @return The CSV header.
      */
-    public String getCsvActionDone() {
-
-        return "DisasterId,AuthorityRequired,ActionsDone,ManagerReview,"
-                + "AdditionalActionsRequired";
+    public void setCreatedBy(Staff createdBy) {
+        this.createdBy = createdBy;
     }
-
 }

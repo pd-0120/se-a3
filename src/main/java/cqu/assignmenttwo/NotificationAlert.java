@@ -6,34 +6,49 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.NamedQuery;
 import java.io.Serializable;
+import java.time.LocalDateTime;
 import java.util.StringJoiner;
 
 /**
  *
- * @author PJ
+ * @author PJ - Andres Pinilla
+ * 
+ * This class is to create the Notification Alert objects. It has getters and setters
+ * to access the different types of data. It validates the data to prevent 
+ * duplicities and persist the objects to store the information in the database.
  */
 @Entity
-@NamedQuery(name = "getAllNotifications", query = "SELECT n from NotificationAlert n")
+@NamedQuery(name = "getAllNotifications", 
+            query = "SELECT n from NotificationAlert n")
+@NamedQuery(name = "findRegisteredNotifications", 
+            query = "SELECT n FROM NotificationAlert n WHERE n.disasterId = :disasterId")
 public class NotificationAlert implements Serializable {
 
     //Attributes
+    private String reporterName;
     private Long disasterId;
     private String disasterDate;
     private String typeOfDisaster;
     private String disasterLocation;
     private String disasterDescription;
     private String levelOfPriority;
+    private LocalDateTime timeStamping;
+    private Staff createdBy;
 
     //Constructor
-    public NotificationAlert(Long disasterId, String disasterDate,
-            String typeOfDisaster, String disasterLocation,
-            String disasterDescription, String levelOfPriority) {
+    public NotificationAlert(Long disasterId, String reporterName, 
+            String disasterDate, String typeOfDisaster, String disasterLocation,
+            String disasterDescription, String levelOfPriority,
+            LocalDateTime timeStamping, Staff createdBy) {
         this.disasterId = disasterId;
+        this.reporterName = reporterName;
         this.disasterDate = disasterDate;
         this.typeOfDisaster = typeOfDisaster;
         this.disasterLocation = disasterLocation;
         this.disasterDescription = disasterDescription;
         this.levelOfPriority = levelOfPriority;
+        this.timeStamping = LocalDateTime.now();
+        this.createdBy = createdBy;
     }
 
     public NotificationAlert() {
@@ -43,14 +58,6 @@ public class NotificationAlert implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
-
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
 
     @Override
     public int hashCode() {
@@ -73,6 +80,13 @@ public class NotificationAlert implements Serializable {
     }
 
     // Getters and Setters
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
     /**
      * Gets the disaster id associated with the notification alert.
      *
@@ -88,6 +102,23 @@ public class NotificationAlert implements Serializable {
      */
     public void setDisasterId(Long disasterId) {
         this.disasterId = disasterId;
+    }
+    
+    /**
+     * Gets the reporter name associated with the disaster event.
+     *
+     * @return The reporter name in String format.
+     */
+    public String getReporterName() {
+        return reporterName;
+    }
+
+    /**
+     * Sets the reporter name associated with the disaster event.
+     *
+     */
+    public void setReporterName(String reporterName) {
+        this.reporterName = reporterName;
     }
 
     /**
@@ -176,30 +207,28 @@ public class NotificationAlert implements Serializable {
     }
 
     /**
-     * Converts the notification alert details to a CSV formatted string.
+     * Gets the date and time when the notification was registered.
      *
-     * @return a new string for each new notification alert.
+     * @return The date and time when the notification was registered in String format.
      */
-    public String toCsvStringNotificationAlert() {
-        StringJoiner joiner = new StringJoiner(",");
-        // joiner.add(getDisasterId())
-        //         .add(getDisasterDate())
-        //         .add(getTypeOfDisaster())
-        //         .add(getDisasterLocation())
-        //         .add(getDisasterDescription())
-        //         .add(getLevelOfPriority());
-        return joiner.toString();
+    public String getTimeStamping() {
+        return timeStamping.toString(); // Returns date and time as a string
+    }
+    
+    /**
+     * Gets the staff member logged to identify who creates or modifies the report.
+     * 
+     * @return the staff id
+     */
+    public Staff getCreatedBy() {
+        return createdBy;
     }
 
     /**
-     * Gets the CSV header for the notification alert information.
+     * Sets the staff member who creates or modifies the report.
      *
-     * @return The CSV header.
      */
-    public String getCsvNotificationAlert() {
-
-        return "DisasterId,DisasterDate,TypeOfDisaster,DisasterLocation,"
-                + "DisasterDescription,LevelOfPriority";
+    public void setCreatedBy(Staff createdBy) {
+        this.createdBy = createdBy;
     }
-
 }

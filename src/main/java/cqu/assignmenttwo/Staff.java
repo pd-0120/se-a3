@@ -6,13 +6,18 @@ import jakarta.persistence.Enumerated;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.Lob;
 import jakarta.persistence.NamedQuery;
 import java.io.Serializable;
 import java.util.StringJoiner;
 
 /**
  *
- * @author PJ
+ * @author PJ - Andres Pinilla 
+ * 
+ * This class is to create the Staff objects. It has getters and setters
+ * to access the different types of data and queries to process the user request
+ * with the database.
  */
 @Entity  
 
@@ -27,21 +32,24 @@ public class Staff implements Serializable {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
     //Atributes
-    private String idStaff;
     @Enumerated(EnumType.STRING)
     private Role role;
     private String name;
     private String emailAddress;
     private String password;
+    
+    @Lob // Large object for storing the salt (binary data)
+    private byte[] salt;
 
     //Constructor
-    public Staff(String idStaff, Role role, String name, String emailAddress,
-            String password) {
-        this.idStaff = idStaff;
+    public Staff(Role role, String name, String emailAddress,
+            String password, byte[] salt) {
+//        this.idStaff = idStaff;
         this.name = name;
         this.emailAddress = emailAddress;
         this.role = role;
         this.password = password;
+        this.salt = salt;
     }
 
     public Staff() {
@@ -55,25 +63,7 @@ public class Staff implements Serializable {
         this.id = id;
     }
 
-    //Getters and Setters
-    /**
-     * Gets the staff id associated with the staff member.
-     *
-     * @return The staff id in String format.
-     */
-    public String getIdStaff() {
-        return idStaff;
-    }
-
-    /**
-     * Sets the staff id associated with the staff member.
-     *
-     */
-    public void setIdStaff(String idStaff) {
-        this.idStaff = idStaff;
-    }
-
-    /**
+     /**
      * Gets the name associated with the staff member.
      *
      * @return The name in String format.
@@ -142,27 +132,28 @@ public class Staff implements Serializable {
     }
 
     /**
-     * Converts the staff details to a CSV formatted string.
+     * Gets the role associated with the staff member.
      *
-     * @return a new string for each new staff.
+     * @return The role in enum format.
      */
-    public String toCsvStringStaff() {
-        StringJoiner joiner = new StringJoiner(",");
-        joiner.add(getIdStaff())
-                .add(getRoleAsString())
-                .add(getName())
-                .add(getEmailAddress())
-                .add(getPassword());
-        return joiner.toString();
+    public Role getRole() {
+        return role;
+    }
+    
+    /**
+     * Gets the password salt associated with the staff member.
+     *
+     * @return The salt in byte format.
+     */
+    public byte[] getSalt() {
+        return salt;
     }
 
     /**
-     * Gets the CSV header for the staff information.
+     * Sets the salt password associated with the staff member.
      *
-     * @return The CSV header.
      */
-    public String getCsvStaffHeader() {
-
-        return "IdStaff,Role,Name,EmailAddress,Password";
+    public void setSalt(byte[] salt) {
+        this.salt = salt;
     }
 }

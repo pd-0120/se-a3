@@ -6,6 +6,7 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 import java.io.IOException;
+import static javafx.application.Application.launch;
 
 /**
  *
@@ -28,7 +29,7 @@ public class App extends Application {
      */
     @Override
     public void start(Stage stage) throws IOException {
-        scene = new Scene(loadFXML("primary"), 1000, 765);
+        scene = new Scene(loadFXML("primary"), 1200, 765);
         stage.setScene(scene);
         stage.show();
     }

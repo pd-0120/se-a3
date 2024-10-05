@@ -3,6 +3,7 @@ package cqu.assignmenttwo;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.Query;
 import java.io.IOException;
+import java.time.LocalDateTime;
 import java.util.LinkedList;
 import java.util.List;
 import javafx.beans.property.SimpleStringProperty;
@@ -39,14 +40,21 @@ public class EmergencyResponderController {
     private ActionPlans selectedActionPlan;
     // Stores the provided actiones done from the actionDoneTextArea.
     private String providedActionsDone;
+    
+    // Declare entity manager in class level to avoid redundancy 
+    EntityManagerUtils emu = new EntityManagerUtils();
+    EntityManager em = emu.getEm();
+    
+    // Get the logged-in user
+    Staff loggedInUser = SessionManager.getInstance().getLoggedInUser();
 
     // FXML buttons, labels, combobox text areas and text fields.
     @FXML
-    private ComboBox<String> planSelectionCombobox;
+    private ComboBox<Long> planSelectionCombobox;
     @FXML
     private TableView<ActionPlans> actionPlanTableView;
     @FXML
-    private TableColumn<ActionPlans, String> disasterIdTable;
+    private TableColumn<ActionPlans, Long> disasterIdTable;
     @FXML
     private TableColumn<ActionPlans, String> priorityTable;
     @FXML
@@ -57,6 +65,8 @@ public class EmergencyResponderController {
     private TableColumn<ActionPlans, String> planReviewTable;
     @FXML
     private TableColumn<ActionPlans, String> planChangesTable;
+    @FXML
+    private TableColumn<ActionsDone, LocalDateTime> timeStampingActionsTable;
     @FXML
     private Label planErrorLabel;
     @FXML
@@ -70,10 +80,8 @@ public class EmergencyResponderController {
     private void initialize() {
         // Sets the font style of planSelectionCombobox.
         planSelectionCombobox.setStyle("-fx-font-family: 'Arial'");
-        // Load data from CSV file in the observableList.
-
-        EntityManagerUtils emu = new EntityManagerUtils();
-        EntityManager em = emu.getEm();
+        
+        // Load data from database.
         Query query = em.createNamedQuery("getAllActionPlans");
         List<ActionPlans> actionPlanList = query.getResultList();
 
@@ -101,6 +109,8 @@ public class EmergencyResponderController {
                 new PropertyValueFactory<>("planReview"));
         planChangesTable.setCellValueFactory(
                 new PropertyValueFactory<>("planChanges"));
+        timeStampingActionsTable.setCellValueFactory(
+                new PropertyValueFactory<>("timeStamping"));
         // Sets the font style.
         actionPlanTableView.setStyle("-fx-font-family: 'Arial'");
 
@@ -113,11 +123,11 @@ public class EmergencyResponderController {
      *
      * @return the action plan selected.
      */
-    private ObservableList<String> getDisasterIdsForActionPlan() {
-        ObservableList<String> disasterIds = FXCollections.observableArrayList();
+    private ObservableList<Long> getDisasterIdsForActionPlan() {
+        ObservableList<Long> disasterIds = FXCollections.observableArrayList();
         for (ActionPlans actionPlan : actionPlans) {
-            if (!disasterIds.contains(actionPlan.getDisasterId().toString())) {
-                disasterIds.add(actionPlan.getDisasterId().toString());
+            if (!disasterIds.contains(actionPlan.getDisasterId())) {
+                disasterIds.add(actionPlan.getDisasterId());
             }
         }
         return disasterIds;
@@ -130,11 +140,11 @@ public class EmergencyResponderController {
      */
     @FXML
     private void handlePlanSelection(ActionEvent event) {
-        String selectedId = planSelectionCombobox.getValue();
+        Long selectedId = planSelectionCombobox.getValue();
         if (selectedId != null) {
             // Filter the action plan to find the selected one.
             ObservableList<ActionPlans> filteredReports = actionPlans.filtered(
-                    actionPlan -> actionPlan.getDisasterId().toString().equals(selectedId));
+                    actionPlan -> actionPlan.getDisasterId().equals(selectedId));
             // Set the items in the table view.
             actionPlanTableView.setItems(filteredReports);
 
@@ -173,33 +183,64 @@ public class EmergencyResponderController {
                     = ResponderAuthority.valueOf(selectedActionPlan.getAuthorityRequired());
             String actionsDone = providedActionsDone;
 
-            // Create a new Action Plan
-            ActionsDone actionsReport = new ActionsDone(
-                    disasterId,
-                    authorityRequired,
-                    actionsDone,
-                    // Manager review, it is filled with 0 because they are not 
-                    //provided in this screen.
-                    "0",
-                    // Additional actions, it is filled with 0 because they are not 
-                    //provided in this screen.
-                    "0"
-            );
-            // Save the actions done in the DB
-            EntityManagerUtils emu = new EntityManagerUtils();
-            EntityManager em = emu.getEm();
-            em.getTransaction().begin();
-            em.persist(actionsReport);
-            em.getTransaction().commit();
-            // Hides the error message when the actions done are created.
-            planErrorLabel.setVisible(false);
-
-            // Displays the Disaster emergency responders menu screen.
             try {
-                App.setRoot("EmergencyResponderMenu");
-            } catch (IOException e) {
-                // Handle IOException if there is an issue loading the new screen
+                // Query to check if an action done for this disasterId already exists
+                Query queryActionDone = em.createNamedQuery("findRegisteredActionsDone");
+                queryActionDone.setParameter("disasterId", disasterId);
+
+                List<ActionsDone> existingActionsDone = queryActionDone.getResultList();
+
+                em.getTransaction().begin();
+
+                if (!existingActionsDone.isEmpty()) {
+                    // If an action plan exists, overwrite it with the new data
+                    ActionsDone actionDone = existingActionsDone.get(0); // Get the existing plan
+                    actionDone.setAuthorityRequired(authorityRequired);
+                    actionDone.setActionsDone(actionsDone);
+                    actionDone.setActionsDoneReview("Pending Review");
+                    // changes required are empty because the responder just adjust 
+                    // the report.
+                    actionDone.setAdditionalActions("");
+                    LocalDateTime.now();
+                    actionDone.setCreatedBy(loggedInUser); // Pass the logged-in user
+
+                    em.merge(actionDone); // Update the existing action done
+
+                } else {
+                    // If no actions done exist, create a new one
+                    ActionsDone actionsReport = new ActionsDone(
+                            disasterId,
+                            authorityRequired,
+                            actionsDone,
+                            // Manager review, it is filled with 0 because they are not 
+                            //provided in this screen.
+                            "Pending Review",
+                            // Additional actions, it is filled with 0 because they are not 
+                            //provided in this screen.
+                            "",
+                            LocalDateTime.now(),
+                            loggedInUser // Pass the logged-in user
+                    );
+                    // Persist the new action done
+                    em.persist(actionsReport);
+                }
+
+                em.getTransaction().commit(); // Commit the transaction
+
+                // Hide error label after creating/updating the plan
+                planErrorLabel.setVisible(false);
+
+                // Redirect to the Emergency responder menu screen
+                try {
+                    App.setRoot("EmergencyResponderMenu");
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+
+            } catch (Exception e) {
                 e.printStackTrace();
+            } finally {
+                em.close(); // Close the EntityManager
             }
 
         } else {
