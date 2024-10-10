@@ -22,7 +22,7 @@ import javafx.scene.input.KeyEvent;
 /**
  * FXML Controller class
  *
- * @author AndresPinilla 12243141
+ * @author AndresPinilla 12243141 and Nara
  *
  * This class is to control the DisasterAssistantMenu.fxml,
  * DisasterManagerMenu.fxml, EmergencyResponderMenu.fxml, and the Login.fxml. It
