@@ -12,7 +12,6 @@
 <?import javafx.scene.shape.Line?>
 <?import javafx.scene.text.Font?>
 
-
 <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="765.0" prefWidth="1000.0" style="-fx-background-color: MediumSeaGreen;" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="cqu.assignmenttwo.LoginAndRegistrationController">
    <children>
       <Label layoutX="250.0" layoutY="140.0" text="Staff Registration">
@@ -45,16 +44,6 @@
          </font>
       </Button>
       <TextField fx:id="staffEmailRegistration" layoutX="400.0" layoutY="440.0" onKeyTyped="#staffEmailRegistration">
-         <font>
-            <Font name="Arial" size="13.0" />
-         </font>
-      </TextField>
-      <Label layoutX="250.0" layoutY="260.0" text="Staff Id">
-         <font>
-            <Font name="Arial" size="16.0" />
-         </font>
-      </Label>
-      <TextField fx:id="staffIdRegistration" editable="false" layoutX="400.0" layoutY="260.0">
          <font>
             <Font name="Arial" size="13.0" />
          </font>
