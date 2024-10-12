@@ -56,6 +56,21 @@
             <version>5.6.0</version>
             <scope>test</scope>
         </dependency>
+        <!-- Mockito for mocking dependencies -->
+   
+    <dependency>
+    <groupId>org.mockito</groupId>
+    <artifactId>mockito-inline</artifactId>
+    <version>4.2.0</version>
+    <scope>test</scope>
+</dependency>
+    <dependency>
+        <groupId>org.mockito</groupId>
+        <artifactId>mockito-junit-jupiter</artifactId>
+        <version>4.2.0</version>
+        <scope>test</scope>
+    </dependency>
+
         <dependency>
             <groupId>org.eclipse.persistence</groupId>
             <artifactId>org.eclipse.persistence.core</artifactId>
@@ -210,6 +225,20 @@
             <groupId>wsdl4j</groupId>
             <artifactId>wsdl4j</artifactId>
             <version>1.6.3</version>
+        </dependency>
+        <dependency>
+            <groupId>org.mockito</groupId>
+            <artifactId>mockito-core</artifactId>
+            <version>5.14.1</version>
+            <scope>test</scope>
+            <type>jar</type>
+        </dependency>
+        <dependency>
+            <groupId>org.jfxcore</groupId>
+            <artifactId>javafx-swing</artifactId>
+            <version>18-ea+1</version>
+            <scope>test</scope>
+            <type>jar</type>
         </dependency>
     </dependencies>
     <build>
