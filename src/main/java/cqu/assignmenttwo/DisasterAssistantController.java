@@ -394,4 +394,204 @@ public class DisasterAssistantController {
             planErrorLabel.setVisible(true);
         }
     }
+
+    public List<NotificationAlert> getNotificationList() {
+        return notificationList;
+    }
+
+    public void setNotificationList(List<NotificationAlert> notificationList) {
+        this.notificationList = notificationList;
+    }
+
+    public List<ActionPlans> getPlanList() {
+        return planList;
+    }
+
+    public void setPlanList(List<ActionPlans> planList) {
+        this.planList = planList;
+    }
+
+    public ObservableList<DisasterEvent> getDisasterEvents() {
+        return disasterEvents;
+    }
+
+    public void setDisasterEvents(ObservableList<DisasterEvent> disasterEvents) {
+        this.disasterEvents = disasterEvents;
+    }
+
+    public DisasterEvent getSelectedEvent() {
+        return selectedEvent;
+    }
+
+    public void setSelectedEvent(DisasterEvent selectedEvent) {
+        this.selectedEvent = selectedEvent;
+    }
+
+    public String getSelectedPriorityLevel() {
+        return selectedPriorityLevel;
+    }
+
+    public void setSelectedPriorityLevel(String selectedPriorityLevel) {
+        this.selectedPriorityLevel = selectedPriorityLevel;
+    }
+
+    public ResponderAuthority getSelectedAuthorityRequired() {
+        return selectedAuthorityRequired;
+    }
+
+    public void setSelectedAuthorityRequired(ResponderAuthority selectedAuthorityRequired) {
+        this.selectedAuthorityRequired = selectedAuthorityRequired;
+    }
+
+    public String getProvidedActions() {
+        return providedActions;
+    }
+
+    public void setProvidedActions(String providedActions) {
+        this.providedActions = providedActions;
+    }
+
+    public EntityManagerUtils getEmu() {
+        return emu;
+    }
+
+    public void setEmu(EntityManagerUtils emu) {
+        this.emu = emu;
+    }
+
+    public EntityManager getEm() {
+        return em;
+    }
+
+    public void setEm(EntityManager em) {
+        this.em = em;
+    }
+
+    public Staff getLoggedInUser() {
+        return loggedInUser;
+    }
+
+    public void setLoggedInUser(Staff loggedInUser) {
+        this.loggedInUser = loggedInUser;
+    }
+
+    public Label getNotificationErrorLabel() {
+        return notificationErrorLabel;
+    }
+
+    public void setNotificationErrorLabel(Label notificationErrorLabel) {
+        this.notificationErrorLabel = notificationErrorLabel;
+    }
+
+    public Label getNotificationCreatedLabel() {
+        return notificationCreatedLabel;
+    }
+
+    public void setNotificationCreatedLabel(Label notificationCreatedLabel) {
+        this.notificationCreatedLabel = notificationCreatedLabel;
+    }
+
+    public Label getPlanErrorLabel() {
+        return planErrorLabel;
+    }
+
+    public void setPlanErrorLabel(Label planErrorLabel) {
+        this.planErrorLabel = planErrorLabel;
+    }
+
+    public ComboBox<Long> getDisasterSelectionCombobox() {
+        return disasterSelectionCombobox;
+    }
+
+    public void setDisasterSelectionCombobox(ComboBox<Long> disasterSelectionCombobox) {
+        this.disasterSelectionCombobox = disasterSelectionCombobox;
+    }
+
+    public ComboBox<ResponderAuthority> getAuthorityRequiredCombobox() {
+        return authorityRequiredCombobox;
+    }
+
+    public void setAuthorityRequiredCombobox(ComboBox<ResponderAuthority> authorityRequiredCombobox) {
+        this.authorityRequiredCombobox = authorityRequiredCombobox;
+    }
+
+    public TextArea getActionRequiredTextArea() {
+        return actionRequiredTextArea;
+    }
+
+    public void setActionRequiredTextArea(TextArea actionRequiredTextArea) {
+        this.actionRequiredTextArea = actionRequiredTextArea;
+    }
+
+    public ComboBox<String> getPriorityLevelCombobox() {
+        return priorityLevelCombobox;
+    }
+
+    public void setPriorityLevelCombobox(ComboBox<String> priorityLevelCombobox) {
+        this.priorityLevelCombobox = priorityLevelCombobox;
+    }
+
+    public TableView<DisasterEvent> getDisasterInformationTableView() {
+        return disasterInformationTableView;
+    }
+
+    public void setDisasterInformationTableView(TableView<DisasterEvent> disasterInformationTableView) {
+        this.disasterInformationTableView = disasterInformationTableView;
+    }
+
+    public TableColumn<DisasterEvent, String> getReporterNameTable() {
+        return reporterNameTable;
+    }
+
+    public void setReporterNameTable(TableColumn<DisasterEvent, String> reporterNameTable) {
+        this.reporterNameTable = reporterNameTable;
+    }
+
+    public TableColumn<DisasterEvent, Long> getDisasterIdTable() {
+        return disasterIdTable;
+    }
+
+    public void setDisasterIdTable(TableColumn<DisasterEvent, Long> disasterIdTable) {
+        this.disasterIdTable = disasterIdTable;
+    }
+
+    public TableColumn<DisasterEvent, LocalDate> getDisasterDateTable() {
+        return disasterDateTable;
+    }
+
+    public void setDisasterDateTable(TableColumn<DisasterEvent, LocalDate> disasterDateTable) {
+        this.disasterDateTable = disasterDateTable;
+    }
+
+    public TableColumn<DisasterEvent, String> getTypeOfDisasterTable() {
+        return typeOfDisasterTable;
+    }
+
+    public void setTypeOfDisasterTable(TableColumn<DisasterEvent, String> typeOfDisasterTable) {
+        this.typeOfDisasterTable = typeOfDisasterTable;
+    }
+
+    public TableColumn<DisasterEvent, String> getDisasterLocationTable() {
+        return disasterLocationTable;
+    }
+
+    public void setDisasterLocationTable(TableColumn<DisasterEvent, String> disasterLocationTable) {
+        this.disasterLocationTable = disasterLocationTable;
+    }
+
+    public TableColumn<DisasterEvent, String> getDisasterDescriptionTable() {
+        return disasterDescriptionTable;
+    }
+
+    public void setDisasterDescriptionTable(TableColumn<DisasterEvent, String> disasterDescriptionTable) {
+        this.disasterDescriptionTable = disasterDescriptionTable;
+    }
+
+    public TableColumn<DisasterEvent, LocalDateTime> getTimeStampingTable() {
+        return timeStampingTable;
+    }
+
+    public void setTimeStampingTable(TableColumn<DisasterEvent, LocalDateTime> timeStampingTable) {
+        this.timeStampingTable = timeStampingTable;
+    }
 }
