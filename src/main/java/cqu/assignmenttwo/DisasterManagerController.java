@@ -549,4 +549,309 @@ public class DisasterManagerController {
             e.printStackTrace();
         }
     }
+
+    public List<ActionPlans> getPlanList() {
+        return planList;
+    }
+
+    public void setPlanList(List<ActionPlans> planList) {
+        this.planList = planList;
+    }
+
+    public ObservableList<ActionPlans> getActionPlans() {
+        return actionPlans;
+    }
+
+    public void setActionPlans(ObservableList<ActionPlans> actionPlans) {
+        this.actionPlans = actionPlans;
+    }
+
+    public ActionPlans getSelectedActionPlan() {
+        return selectedActionPlan;
+    }
+
+    public void setSelectedActionPlan(ActionPlans selectedActionPlan) {
+        this.selectedActionPlan = selectedActionPlan;
+    }
+
+    public String getSelectedReviewPlanDecision() {
+        return selectedReviewPlanDecision;
+    }
+
+    public void setSelectedReviewPlanDecision(String selectedReviewPlanDecision) {
+        this.selectedReviewPlanDecision = selectedReviewPlanDecision;
+    }
+
+    public String getProvidedChangesRequired() {
+        return providedChangesRequired;
+    }
+
+    public void setProvidedChangesRequired(String providedChangesRequired) {
+        this.providedChangesRequired = providedChangesRequired;
+    }
+
+    public List<ActionsDone> getActionsList() {
+        return actionsList;
+    }
+
+    public void setActionsList(List<ActionsDone> actionsList) {
+        this.actionsList = actionsList;
+    }
+
+    public ObservableList<ActionsDone> getActionsDone() {
+        return actionsDone;
+    }
+
+    public void setActionsDone(ObservableList<ActionsDone> actionsDone) {
+        this.actionsDone = actionsDone;
+    }
+
+    public ActionsDone getSelectedActionDone() {
+        return selectedActionDone;
+    }
+
+    public void setSelectedActionDone(ActionsDone selectedActionDone) {
+        this.selectedActionDone = selectedActionDone;
+    }
+
+    public String getSelectedReviewActionDecision() {
+        return selectedReviewActionDecision;
+    }
+
+    public void setSelectedReviewActionDecision(String selectedReviewActionDecision) {
+        this.selectedReviewActionDecision = selectedReviewActionDecision;
+    }
+
+    public String getProvidedAdditionalActions() {
+        return providedAdditionalActions;
+    }
+
+    public void setProvidedAdditionalActions(String providedAdditionalActions) {
+        this.providedAdditionalActions = providedAdditionalActions;
+    }
+
+    public EntityManagerUtils getEmu() {
+        return emu;
+    }
+
+    public void setEmu(EntityManagerUtils emu) {
+        this.emu = emu;
+    }
+
+    public EntityManager getEm() {
+        return em;
+    }
+
+    public void setEm(EntityManager em) {
+        this.em = em;
+    }
+
+    public Staff getLoggedInUser() {
+        return loggedInUser;
+    }
+
+    public void setLoggedInUser(Staff loggedInUser) {
+        this.loggedInUser = loggedInUser;
+    }
+
+    public ComboBox<Long> getPlanSelectionCombobox() {
+        return planSelectionCombobox;
+    }
+
+    public void setPlanSelectionCombobox(ComboBox<Long> planSelectionCombobox) {
+        this.planSelectionCombobox = planSelectionCombobox;
+    }
+
+    public ComboBox<String> getPlanReviewCombobox() {
+        return planReviewCombobox;
+    }
+
+    public void setPlanReviewCombobox(ComboBox<String> planReviewCombobox) {
+        this.planReviewCombobox = planReviewCombobox;
+    }
+
+    public TableView<ActionPlans> getActionPlanTableView() {
+        return actionPlanTableView;
+    }
+
+    public void setActionPlanTableView(TableView<ActionPlans> actionPlanTableView) {
+        this.actionPlanTableView = actionPlanTableView;
+    }
+
+    public TableColumn<ActionPlans, Long> getDisasterIdTable() {
+        return disasterIdTable;
+    }
+
+    public void setDisasterIdTable(TableColumn<ActionPlans, Long> disasterIdTable) {
+        this.disasterIdTable = disasterIdTable;
+    }
+
+    public TableColumn<ActionPlans, String> getPriorityTable() {
+        return priorityTable;
+    }
+
+    public void setPriorityTable(TableColumn<ActionPlans, String> priorityTable) {
+        this.priorityTable = priorityTable;
+    }
+
+    public TableColumn<ActionPlans, String> getAuthorityTable() {
+        return authorityTable;
+    }
+
+    public void setAuthorityTable(TableColumn<ActionPlans, String> authorityTable) {
+        this.authorityTable = authorityTable;
+    }
+
+    public TableColumn<ActionPlans, String> getActionsRequiredTable() {
+        return actionsRequiredTable;
+    }
+
+    public void setActionsRequiredTable(TableColumn<ActionPlans, String> actionsRequiredTable) {
+        this.actionsRequiredTable = actionsRequiredTable;
+    }
+
+    public TableColumn<ActionPlans, String> getPlanReviewTable() {
+        return planReviewTable;
+    }
+
+    public void setPlanReviewTable(TableColumn<ActionPlans, String> planReviewTable) {
+        this.planReviewTable = planReviewTable;
+    }
+
+    public TableColumn<ActionPlans, String> getPlanChangesTable() {
+        return planChangesTable;
+    }
+
+    public void setPlanChangesTable(TableColumn<ActionPlans, String> planChangesTable) {
+        this.planChangesTable = planChangesTable;
+    }
+
+    public TableColumn<ActionPlans, LocalDateTime> getTimeStampingTable() {
+        return timeStampingTable;
+    }
+
+    public void setTimeStampingTable(TableColumn<ActionPlans, LocalDateTime> timeStampingTable) {
+        this.timeStampingTable = timeStampingTable;
+    }
+
+    public TableColumn<ActionPlans, String> getCreatedByTable() {
+        return createdByTable;
+    }
+
+    public void setCreatedByTable(TableColumn<ActionPlans, String> createdByTable) {
+        this.createdByTable = createdByTable;
+    }
+
+    public Label getPlanErrorLabel() {
+        return planErrorLabel;
+    }
+
+    public void setPlanErrorLabel(Label planErrorLabel) {
+        this.planErrorLabel = planErrorLabel;
+    }
+
+    public ComboBox<Long> getActionDoneSelectionCombobox() {
+        return actionDoneSelectionCombobox;
+    }
+
+    public void setActionDoneSelectionCombobox(ComboBox<Long> actionDoneSelectionCombobox) {
+        this.actionDoneSelectionCombobox = actionDoneSelectionCombobox;
+    }
+
+    public TableView<ActionsDone> getActionDoneTableView() {
+        return actionDoneTableView;
+    }
+
+    public void setActionDoneTableView(TableView<ActionsDone> actionDoneTableView) {
+        this.actionDoneTableView = actionDoneTableView;
+    }
+
+    public TableColumn<ActionsDone, Long> getDisasterIdActionDoneTable() {
+        return disasterIdActionDoneTable;
+    }
+
+    public void setDisasterIdActionDoneTable(TableColumn<ActionsDone, Long> disasterIdActionDoneTable) {
+        this.disasterIdActionDoneTable = disasterIdActionDoneTable;
+    }
+
+    public TableColumn<ActionsDone, String> getAuthorityActionDoneTable() {
+        return authorityActionDoneTable;
+    }
+
+    public void setAuthorityActionDoneTable(TableColumn<ActionsDone, String> authorityActionDoneTable) {
+        this.authorityActionDoneTable = authorityActionDoneTable;
+    }
+
+    public TableColumn<ActionsDone, String> getActionsDoneTable() {
+        return actionsDoneTable;
+    }
+
+    public void setActionsDoneTable(TableColumn<ActionsDone, String> actionsDoneTable) {
+        this.actionsDoneTable = actionsDoneTable;
+    }
+
+    public TableColumn<ActionsDone, String> getActionsReviewTable() {
+        return actionsReviewTable;
+    }
+
+    public void setActionsReviewTable(TableColumn<ActionsDone, String> actionsReviewTable) {
+        this.actionsReviewTable = actionsReviewTable;
+    }
+
+    public TableColumn<ActionsDone, String> getAdditionalActionsTable() {
+        return additionalActionsTable;
+    }
+
+    public void setAdditionalActionsTable(TableColumn<ActionsDone, String> additionalActionsTable) {
+        this.additionalActionsTable = additionalActionsTable;
+    }
+
+    public TableColumn<ActionsDone, LocalDateTime> getTimeStampingActionsTable() {
+        return timeStampingActionsTable;
+    }
+
+    public void setTimeStampingActionsTable(TableColumn<ActionsDone, LocalDateTime> timeStampingActionsTable) {
+        this.timeStampingActionsTable = timeStampingActionsTable;
+    }
+
+    public TableColumn<ActionsDone, String> getCreatedByActionsTable() {
+        return createdByActionsTable;
+    }
+
+    public void setCreatedByActionsTable(TableColumn<ActionsDone, String> createdByActionsTable) {
+        this.createdByActionsTable = createdByActionsTable;
+    }
+
+    public ComboBox<String> getActionDoneReviewCombobox() {
+        return actionDoneReviewCombobox;
+    }
+
+    public void setActionDoneReviewCombobox(ComboBox<String> actionDoneReviewCombobox) {
+        this.actionDoneReviewCombobox = actionDoneReviewCombobox;
+    }
+
+    public Label getActionDoneErrorLabel() {
+        return actionDoneErrorLabel;
+    }
+
+    public void setActionDoneErrorLabel(Label actionDoneErrorLabel) {
+        this.actionDoneErrorLabel = actionDoneErrorLabel;
+    }
+
+    public TextArea getActionDoneChangesTextArea() {
+        return actionDoneChangesTextArea;
+    }
+
+    public void setActionDoneChangesTextArea(TextArea actionDoneChangesTextArea) {
+        this.actionDoneChangesTextArea = actionDoneChangesTextArea;
+    }
+
+    public TextArea getPlanChangesTextArea() {
+        return planChangesTextArea;
+    }
+
+    public void setPlanChangesTextArea(TextArea planChangesTextArea) {
+        this.planChangesTextArea = planChangesTextArea;
+    }
+    
 }
