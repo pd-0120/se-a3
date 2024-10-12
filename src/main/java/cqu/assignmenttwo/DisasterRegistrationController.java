@@ -257,4 +257,108 @@ public class DisasterRegistrationController {
         incompleteFieldsLabel.setText(message);
         incompleteFieldsLabel.setVisible(true);
     }
+
+    public List<DisasterEvent> getDisasterList() {
+        return disasterList;
+    }
+
+    public void setDisasterList(List<DisasterEvent> disasterList) {
+        this.disasterList = disasterList;
+    }
+
+    public Button getMainMenuController() {
+        return mainMenuController;
+    }
+
+    public void setMainMenuController(Button mainMenuController) {
+        this.mainMenuController = mainMenuController;
+    }
+
+    public Button getRegisterDisasterController() {
+        return registerDisasterController;
+    }
+
+    public void setRegisterDisasterController(Button registerDisasterController) {
+        this.registerDisasterController = registerDisasterController;
+    }
+
+    public TextField getReporterNameController() {
+        return reporterNameController;
+    }
+
+    public void setReporterNameController(TextField reporterNameController) {
+        this.reporterNameController = reporterNameController;
+    }
+
+    public TextField getReporterAddressController() {
+        return reporterAddressController;
+    }
+
+    public void setReporterAddressController(TextField reporterAddressController) {
+        this.reporterAddressController = reporterAddressController;
+    }
+
+    public TextField getDisasterLocationController() {
+        return disasterLocationController;
+    }
+
+    public void setDisasterLocationController(TextField disasterLocationController) {
+        this.disasterLocationController = disasterLocationController;
+    }
+
+    public Label getIncompleteFieldsLabel() {
+        return incompleteFieldsLabel;
+    }
+
+    public void setIncompleteFieldsLabel(Label incompleteFieldsLabel) {
+        this.incompleteFieldsLabel = incompleteFieldsLabel;
+    }
+
+    public Label getNameErrorLabel() {
+        return nameErrorLabel;
+    }
+
+    public void setNameErrorLabel(Label nameErrorLabel) {
+        this.nameErrorLabel = nameErrorLabel;
+    }
+
+    public Label getMobileErrorLabel() {
+        return mobileErrorLabel;
+    }
+
+    public void setMobileErrorLabel(Label mobileErrorLabel) {
+        this.mobileErrorLabel = mobileErrorLabel;
+    }
+
+    public DatePicker getDisasterDateController() {
+        return disasterDateController;
+    }
+
+    public void setDisasterDateController(DatePicker disasterDateController) {
+        this.disasterDateController = disasterDateController;
+    }
+
+    public ComboBox<TypeOfDisaster> getTypeOfDisasterCombobox() {
+        return typeOfDisasterCombobox;
+    }
+
+    public void setTypeOfDisasterCombobox(ComboBox<TypeOfDisaster> typeOfDisasterCombobox) {
+        this.typeOfDisasterCombobox = typeOfDisasterCombobox;
+    }
+
+    public TextField getReporterMobileController() {
+        return reporterMobileController;
+    }
+
+    public void setReporterMobileController(TextField reporterMobileController) {
+        this.reporterMobileController = reporterMobileController;
+    }
+
+    public TextArea getDisasterDescriptionTextArea() {
+        return disasterDescriptionTextArea;
+    }
+
+    public void setDisasterDescriptionTextArea(TextArea disasterDescriptionTextArea) {
+        this.disasterDescriptionTextArea = disasterDescriptionTextArea;
+    }
 }
