@@ -23,9 +23,11 @@ import javafx.scene.input.KeyEvent;
  *
  * @author AndresPinilla 12243141
  *
- * This class is to control the EmergencyController.fxml. It has multiple data
- * types to store the user's input and key events and key actions methods to
- * handle the user interaction.
+ *         This class is to control the EmergencyController.fxml. It has
+ *         multiple data
+ *         types to store the user's input and key events and key actions
+ *         methods to
+ *         handle the user interaction.
  */
 public class EmergencyResponderController {
 
@@ -34,17 +36,16 @@ public class EmergencyResponderController {
     // Stores all the action plans.
     private List<ActionPlans> planList = new LinkedList<>();
     // Stores the disaster event selected.
-    private ObservableList<ActionPlans> actionPlans
-            = FXCollections.observableArrayList();
+    private ObservableList<ActionPlans> actionPlans = FXCollections.observableArrayList();
     // Stores the selected disaster event from the disasterSelectionCombobox.
     private ActionPlans selectedActionPlan;
     // Stores the provided actiones done from the actionDoneTextArea.
     private String providedActionsDone;
-    
-    // Declare entity manager in class level to avoid redundancy 
+
+    // Declare entity manager in class level to avoid redundancy
     EntityManagerUtils emu = new EntityManagerUtils();
     EntityManager em = emu.getEm();
-    
+
     // Get the logged-in user
     Staff loggedInUser = SessionManager.getInstance().getLoggedInUser();
 
@@ -80,9 +81,10 @@ public class EmergencyResponderController {
     private void initialize() {
         // Sets the font style of planSelectionCombobox.
         planSelectionCombobox.setStyle("-fx-font-family: 'Arial'");
-        
+
         // Load data from database.
         Query query = em.createNamedQuery("getAllActionPlans");
+        @SuppressWarnings("unchecked")
         List<ActionPlans> actionPlanList = query.getResultList();
 
         // Convert the list to an ObservableList
@@ -100,9 +102,8 @@ public class EmergencyResponderController {
         priorityTable.setCellValueFactory(
                 new PropertyValueFactory<>("levelOfPriority"));
         // Use a string converter for ResponderAuthority.
-        authorityTable.setCellValueFactory(cellData
-                -> new SimpleStringProperty(
-                        cellData.getValue().getAuthorityRequired()));
+        authorityTable.setCellValueFactory(cellData -> new SimpleStringProperty(
+                cellData.getValue().getAuthorityRequired()));
         actionsRequiredTable.setCellValueFactory(
                 new PropertyValueFactory<>("actionsRequired"));
         planReviewTable.setCellValueFactory(
@@ -179,8 +180,8 @@ public class EmergencyResponderController {
 
             // Capture the data from the selected action plan.
             Long disasterId = selectedActionPlan.getDisasterId();
-            ResponderAuthority authorityRequired
-                    = ResponderAuthority.valueOf(selectedActionPlan.getAuthorityRequired());
+            ResponderAuthority authorityRequired = ResponderAuthority
+                    .valueOf(selectedActionPlan.getAuthorityRequired());
             String actionsDone = providedActionsDone;
 
             try {
@@ -198,7 +199,7 @@ public class EmergencyResponderController {
                     actionDone.setAuthorityRequired(authorityRequired);
                     actionDone.setActionsDone(actionsDone);
                     actionDone.setActionsDoneReview("Pending Review");
-                    // changes required are empty because the responder just adjust 
+                    // changes required are empty because the responder just adjust
                     // the report.
                     actionDone.setAdditionalActions("");
                     LocalDateTime.now();
@@ -212,11 +213,11 @@ public class EmergencyResponderController {
                             disasterId,
                             authorityRequired,
                             actionsDone,
-                            // Manager review, it is filled with 0 because they are not 
-                            //provided in this screen.
+                            // Manager review, it is filled with 0 because they are not
+                            // provided in this screen.
                             "Pending Review",
-                            // Additional actions, it is filled with 0 because they are not 
-                            //provided in this screen.
+                            // Additional actions, it is filled with 0 because they are not
+                            // provided in this screen.
                             "",
                             LocalDateTime.now(),
                             loggedInUser // Pass the logged-in user
@@ -244,7 +245,7 @@ public class EmergencyResponderController {
             }
 
         } else {
-            // Displays a message to inform there is an error 
+            // Displays a message to inform there is an error
             planErrorLabel.setText("Error. Please select an Action Plan and "
                     + "Describe the actions done");
             planErrorLabel.setVisible(true);
@@ -265,5 +266,9 @@ public class EmergencyResponderController {
             // Handle IOException if there is an issue loading the new screen
             e.printStackTrace();
         }
+    }
+
+    public void setEm(EntityManager em) {
+        this.em = em;
     }
 }
