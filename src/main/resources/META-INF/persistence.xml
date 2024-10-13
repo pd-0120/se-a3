@@ -1,18 +1,23 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <persistence version="2.2" xmlns="http://xmlns.jcp.org/xml/ns/persistence" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/persistence           http://xmlns.jcp.org/xml/ns/persistence/persistence_2_2.xsd">
-  <persistence-unit name="cqu_drs" transaction-type="RESOURCE_LOCAL">
-    <provider>org.eclipse.persistence.jpa.PersistenceProvider</provider>
-    <class>cqu.assignmenttwo.DisasterEvent</class>
-    <class>cqu.assignmenttwo.Staff</class>
-    <class>cqu.assignmenttwo.NotificationAlert</class>
-    <class>cqu.assignmenttwo.ActionPlans</class>
-    <class>cqu.assignmenttwo.ActionsDone</class>
-    <properties>
-      <property name="jakarta.persistence.jdbc.url" value="jdbc:mysql://srv677.hstgr.io/u348799303_drs"/>
-      <property name="jakarta.persistence.jdbc.user" value="u348799303_drs"/>
-      <property name="jakarta.persistence.jdbc.driver" value="com.mysql.cj.jdbc.Driver"/>
-      <property name="jakarta.persistence.jdbc.password" value="^yJ~GU|a^0gS"/>
-      <property name="jakarta.persistence.schema-generation.database.action" value="create"/>
-    </properties>
-  </persistence-unit>
+    <persistence-unit name="cqu_drs" transaction-type="RESOURCE_LOCAL">
+        <provider>org.eclipse.persistence.jpa.PersistenceProvider</provider>
+        <class>cqu.assignmenttwo.DisasterEvent</class>
+        <class>cqu.assignmenttwo.Staff</class>
+        <class>cqu.assignmenttwo.NotificationAlert</class>
+        <class>cqu.assignmenttwo.ActionPlans</class>
+        <class>cqu.assignmenttwo.ActionsDone</class>
+        <properties>
+                 <property name="jakarta.persistence.jdbc.url" value="jdbc:mysql://srv677.hstgr.io/u348799303_drs"/>
+            <property name="jakarta.persistence.jdbc.user" value="u348799303_drs"/>
+            <property name="jakarta.persistence.jdbc.driver" value="com.mysql.cj.jdbc.Driver"/>
+            <property name="jakarta.persistence.jdbc.password" value="^yJ~GU|a^0gS"/>
+            <property name="jakarta.persistence.schema-generation.database.action" value="create"/>
+            <!-- <property name="jakarta.persistence.jdbc.url" value="jdbc:mysql://localhost:3306/w6p1db?zeroDateTimeBehavior=CONVERT_TO_NULL"/>
+            <property name="jakarta.persistence.jdbc.user" value="root"/>
+            <property name="jakarta.persistence.jdbc.driver" value="com.mysql.cj.jdbc.Driver"/>
+            <property name="jakarta.persistence.jdbc.password" value="password"/>
+            <property name="jakarta.persistence.schema-generation.database.action" value="create"/> -->
+        </properties>
+    </persistence-unit>
 </persistence>
