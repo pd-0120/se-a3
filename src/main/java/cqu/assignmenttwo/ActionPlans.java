@@ -28,14 +28,6 @@ public class ActionPlans implements Serializable {
     @jakarta.persistence.GeneratedValue(strategy = jakarta.persistence.GenerationType.AUTO)
     private Long id;
 
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
-
     //Attributes
     private Long disasterId;
     private String levelOfPriority;
@@ -47,7 +39,10 @@ public class ActionPlans implements Serializable {
     private LocalDateTime timeStamping;
     private Staff createdBy;
 
-    //Constructor
+    //Constructors
+    public ActionPlans() {
+    }
+    
     public ActionPlans(Long disasterId, String levelOfPriority,
             ResponderAuthority authorityRequired,
             String actionsRequired, String planReview,
@@ -62,10 +57,14 @@ public class ActionPlans implements Serializable {
         this.createdBy = createdBy;
     }
 
-    public ActionPlans() {
+    //Getters and Setters
+    public Long getId() {
+        return id;
     }
 
-    //Getters and Setters
+    public void setId(Long id) {
+        this.id = id;
+    }
     /**
      * Gets the changes required by the disaster manager.
      *

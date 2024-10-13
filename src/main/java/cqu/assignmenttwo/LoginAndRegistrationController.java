@@ -22,7 +22,7 @@ import javafx.scene.input.KeyEvent;
 /**
  * FXML Controller class
  *
- * @author AndresPinilla 12243141 and Nara
+ * @author AndresPinilla 12243141
  *
  * This class is to control the DisasterAssistantMenu.fxml,
  * DisasterManagerMenu.fxml, EmergencyResponderMenu.fxml, and the Login.fxml. It
@@ -309,6 +309,9 @@ public class LoginAndRegistrationController {
                             hashedPassword,
                             salt // Ensure you store the salt in the Staff entity
                     );
+                    
+                    // Set the newly registered user in the session
+                    SessionManager.getInstance().setLoggedInUser(staff);
 
                     em.getTransaction().begin();
                     em.persist(staff);
